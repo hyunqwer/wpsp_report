@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>개인 학습 리포트 - Dashboard</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        border: "hsl(var(--border))",
+                        input: "hsl(var(--input))",
+                        ring: "hsl(var(--ring))",
+                        background: "hsl(var(--background))",
+                        foreground: "hsl(var(--foreground))",
+                        primary: {
+                            DEFAULT: "hsl(var(--primary))",
+                            foreground: "hsl(var(--primary-foreground))",
+                        },
+                        secondary: {
+                            DEFAULT: "hsl(var(--secondary))",
+                            foreground: "hsl(var(--secondary-foreground))",
+                        },
+                        destructive: {
+                            DEFAULT: "hsl(var(--destructive))",
+                            foreground: "hsl(var(--destructive-foreground))",
+                        },
+                        muted: {
+                            DEFAULT: "hsl(var(--muted))",
+                            foreground: "hsl(var(--muted-foreground))",
+                        },
+                        accent: {
+                            DEFAULT: "hsl(var(--accent))",
+                            foreground: "hsl(var(--accent-foreground))",
+                        },
+                        popover: {
+                            DEFAULT: "hsl(var(--popover))",
+                            foreground: "hsl(var(--popover-foreground))",
+                        },
+                        card: {
+                            DEFAULT: "hsl(var(--card))",
+                            foreground: "hsl(var(--card-foreground))",
+                        },
+                    },
+                    borderRadius: {
+                        lg: "var(--radius)",
+                        md: "calc(var(--radius) - 2px)",
+                        sm: "calc(var(--radius) - 4px)",
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        :root {
+            --background: 0 0% 100%;
+            --foreground: 222.2 84% 4.9%;
+            --card: 0 0% 100%;
+            --card-foreground: 222.2 84% 4.9%;
+            --popover: 0 0% 100%;
+            --popover-foreground: 222.2 84% 4.9%;
+            --primary: 222.2 47.4% 11.2%;
+            --primary-foreground: 210 40% 98%;
+            --secondary: 210 40% 96.1%;
+            --secondary-foreground: 222.2 47.4% 11.2%;
+            --muted: 210 40% 96.1%;
+            --muted-foreground: 215.4 16.3% 46.9%;
+            --accent: 210 40% 96.1%;
+            --accent-foreground: 222.2 47.4% 11.2%;
+            --destructive: 0 84.2% 60.2%;
+            --destructive-foreground: 210 40% 98%;
+            --border: 214.3 31.8% 91.4%;
+            --input: 214.3 31.8% 91.4%;
+            --ring: 222.2 84% 4.9%;
+            --radius: 0.5rem;
+        }
+        body {
+            font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+        }
+    </style>
+
+    <!-- Import Map for Modules -->
+    <script type="importmap">
+    {
+        "imports": {
+            "react": "https://esm.sh/react@18.2.0",
+            "react-dom": "https://esm.sh/react-dom@18.2.0",
+            "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+            "recharts": "https://esm.sh/recharts@2.12.0?external=react,react-dom",
+            "lucide-react": "https://esm.sh/lucide-react@0.330.0?external=react,react-dom",
+            "clsx": "https://esm.sh/clsx@2.1.0",
+            "tailwind-merge": "https://esm.sh/tailwind-merge@2.2.1"
+        }
+    }
+    </script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body class="bg-slate-50 text-foreground min-h-screen">
+    <div id="root"></div>
+
+    <script type="text/babel" data-type="module">
+        import React, { useMemo, useState, createContext, useContext } from "react";
+        import { createRoot } from "react-dom/client";
+        import { 
+            LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
+            Area, AreaChart, Bar, BarChart, Radar, RadarChart, PolarGrid, 
+            PolarAngleAxis, PolarRadiusAxis, Legend, RadialBarChart, RadialBar 
+        } from "recharts";
+        import { 
+            Award, Calendar as CalendarIcon, Mic, Rocket, Users, Brain, 
+            Clock, Volume2, TrendingUp, Info 
+        } from "lucide-react";
+        import { clsx } from "clsx";
+        import { twMerge } from "tailwind-merge";
+
+        // --- Utility ---
+        function cn(...inputs) {
+            return twMerge(clsx(inputs));
+        }
+
+        // --- UI Components (Mocking shadcn/ui) ---
+        const Card = React.forwardRef(({ className, ...props }, ref) => (
+            <div ref={ref} className={cn("rounded-lg border bg-card text-card-foreground shadow-sm", className)} {...props} />
+        ));
+        const CardHeader = React.forwardRef(({ className, ...props }, ref) => (
+            <div ref={ref} className={cn("flex flex-col space-y-1.5 p-6", className)} {...props} />
+        ));
+        const CardTitle = React.forwardRef(({ className, ...props }, ref) => (
+            <h3 ref={ref} className={cn("text-2xl font-semibold leading-none tracking-tight", className)} {...props} />
+        ));
+        const CardContent = React.forwardRef(({ className, ...props }, ref) => (
+            <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
+        ));
+
+        const Badge = ({ className, variant = "default", ...props }) => {
+            const variants = {
+                default: "border-transparent bg-primary text-primary-foreground hover:bg-primary/80",
+                secondary: "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
+                outline: "text-foreground",
+            };
+            return (
+                <div className={cn("inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2", variants[variant], className)} {...props} />
+            );
+        };
+
+        const Button = React.forwardRef(({ className, variant = "default", size = "default", ...props }, ref) => {
+            const variants = {
+                default: "bg-slate-900 text-white hover:bg-slate-900/90",
+                secondary: "bg-slate-100 text-slate-900 hover:bg-slate-100/80",
+                outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+            };
+            const sizes = {
+                default: "h-10 px-4 py-2",
+                sm: "h-9 rounded-md px-3",
+                icon: "h-10 w-10",
+            };
+            return (
+                <button ref={ref} className={cn("inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50", variants[variant], sizes[size], className)} {...props} />
+            );
+        });
+
+        const Input = React.forwardRef(({ className, type, ...props }, ref) => (
+            <input
+                type={type}
+                className={cn("flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50", className)}
+                ref={ref}
+                {...props}
+            />
+        ));
+
+        const Label = React.forwardRef(({ className, ...props }, ref) => (
+            <label ref={ref} className={cn("text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70", className)} {...props} />
+        ));
+
+        const Progress = React.forwardRef(({ className, value, ...props }, ref) => (
+            <div ref={ref} className={cn("relative h-4 w-full overflow-hidden rounded-full bg-secondary", className)} {...props}>
+                <div className="h-full w-full flex-1 bg-primary transition-all" style={{ transform: `translateX(-${100 - (value || 0)}%)` }} />
+            </div>
+        ));
+
+        // Custom Tabs Implementation
+        const TabsContext = createContext({});
+        const Tabs = ({ defaultValue, children, className }) => {
+            const [activeTab, setActiveTab] = useState(defaultValue);
+            return (
+                <TabsContext.Provider value={{ activeTab, setActiveTab }}>
+                    <div className={className}>{children}</div>
+                </TabsContext.Provider>
+            );
+        };
+        const TabsList = ({ className, children }) => (
+            <div className={cn("inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground", className)}>{children}</div>
+        );
+        const TabsTrigger = ({ value, children, className }) => {
+            const { activeTab, setActiveTab } = useContext(TabsContext);
+            const isActive = activeTab === value;
+            return (
+                <button
+                    onClick={() => setActiveTab(value)}
+                    className={cn("inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50", isActive ? "bg-background text-foreground shadow-sm" : "", className)}
+                >
+                    {children}
+                </button>
+            );
+        };
+        const TabsContent = ({ value, children, className }) => {
+            const { activeTab } = useContext(TabsContext);
+            if (activeTab !== value) return null;
+            return <div className={cn("mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2", className)}>{children}</div>;
+        };
+
+
+        // --- Sample Data (From original code) ---
+        const months = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월"]; 
+
+        const vocabDifficultyData = months.map((m, i) => ({
+            month: m,
+            easy: Math.round(88 + Math.sin(i) * 4),
+            mid: Math.round(75 + i * 1.2),
+            hard: Math.round(55 + i * 2),
+            adjAcc: Math.round(62 + i * 2.1),
+        }));
+
+        const posAccuracy = [
+            { pos: "동사", acc: 88 },
+            { pos: "형용사", acc: 72 },
+            { pos: "명사", acc: 81 },
+            { pos: "일상표현", acc: 93 },
+            { pos: "전치사", acc: 68 },
+        ];
+
+        const phonemeAccuracy = [
+            { sound: "/r/", value: 81 },
+            { sound: "/th/", value: 72 },
+            { sound: "/v/", value: 86 },
+            { sound: "/l/", value: 88 },
+            { sound: "/æ/", value: 79 },
+        ];
+
+        const phonemeTrend = months.map((m, i) => ({ month: m, r: 68 + i*1.7, th: 55 + i*2.8, v: 74 + i*1.9 }));
+        const fluencyTrend = months.map((m, i) => ({ month: m, wpm: 72 + i*3.1, pause: Math.max(0.6, 3.2 - i*0.25) }));
+
+        const streaks = [
+            { name: "연속 학습(최장)", value: 32 },
+            { name: "주간 평균 참여일", value: 5.3 },
+            { name: "월간 참여일", value: 21 },
+        ];
+
+        const peerBenchmarks = [
+            { metric: "난이도-보정 어휘 정확도", self: 78, peer: 72 },
+            { metric: "발음 정확도(음소 평균)", self: 84, peer: 76 },
+            { metric: "유창성(WPM)", self: 95, peer: 82 },
+        ];
+
+        const timeOfDay = [
+            { slot: "오전", attempts: 120, acc: 74 },
+            { slot: "오후", attempts: 260, acc: 77 },
+            { slot: "저녁", attempts: 410, acc: 85 },
+        ];
+
+        const pct = (v) => `${Math.round(v)}%`;
+
+        // --- Sub Components ---
+        function Kpi({ icon:Icon, label, value, helper }) {
+            return (
+                <Card className="rounded-2xl shadow-sm">
+                    <CardContent className="p-5 flex items-center gap-4">
+                        <div className="p-3 rounded-2xl bg-muted"><Icon className="h-6 w-6"/></div>
+                        <div>
+                            <div className="text-sm text-muted-foreground">{label}</div>
+                            <div className="text-2xl font-semibold">{value}</div>
+                            {helper && <div className="text-xs text-muted-foreground mt-1">{helper}</div>}
+                        </div>
+                    </CardContent>
+                </Card>
+            );
+        }
+
+        function SectionTitle({title, hint}){
+            return (
+                <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-lg font-semibold">{title}</h3>
+                    {hint && <div className="text-xs text-muted-foreground flex items-center gap-1"><Info className="h-3.5 w-3.5"/>{hint}</div>}
+                </div>
+            );
+        }
+
+        // --- Main Component ---
+        function LearnerReportDashboard(){
+            const [range, setRange] = useState({start:"2025-01-01", end:"2025-09-30"});
+            const [learner, setLearner] = useState({ name: "김서준", grade:"초4", center:"Yoon's English 강남" });
+
+            const avgAdjAcc = useMemo(()=>Math.round(vocabDifficultyData.reduce((a,b)=>a+b.adjAcc,0)/vocabDifficultyData.length),[]);
+            const phonemeAvg = useMemo(()=>Math.round(phonemeAccuracy.reduce((a,b)=>a+b.value,0)/phonemeAccuracy.length),[]);
+            const wpmNow = fluencyTrend[fluencyTrend.length-1].wpm;
+
+            return (
+                <div className="p-6 md:p-10 space-y-6 max-w-7xl mx-auto">
+                    {/* Header */}
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                        <div>
+                            <div className="flex items-center gap-2 mb-1">
+                                <Badge variant="secondary" className="rounded-xl">개인 리포트</Badge>
+                                <Badge className="rounded-xl">베타</Badge>
+                            </div>
+                            <h1 className="text-2xl md:text-3xl font-bold">{learner.name} · {learner.grade} <span className="text-muted-foreground text-base font-normal">({learner.center})</span></h1>
+                            <div className="text-sm text-muted-foreground mt-1 flex items-center gap-2">
+                                <CalendarIcon className="h-4 w-4"/> 분석 기간: {range.start} ~ {range.end}
+                            </div>
+                        </div>
+                        <div className="flex flex-wrap items-end gap-2">
+                            <div className="space-y-1">
+                                <Label className="text-xs">시작일</Label>
+                                <Input type="date" value={range.start} onChange={(e)=>setRange(r=>({...r,start:e.target.value}))} className="w-40"/>
+                            </div>
+                            <div className="space-y-1">
+                                <Label className="text-xs">종료일</Label>
+                                <Input type="date" value={range.end} onChange={(e)=>setRange(r=>({...r,end:e.target.value}))} className="w-40"/>
+                            </div>
+                            <Button className="rounded-2xl">리포트 새로고침</Button>
+                        </div>
+                    </div>
+
+                    {/* KPIs */}
+                    <div className="grid md:grid-cols-4 gap-4">
+                        <Kpi icon={TrendingUp} label="난이도-보정 정확도" value={`${avgAdjAcc}%`} helper="새로운 단어 습득 효율"/>
+                        <Kpi icon={Mic} label="발음 정확도" value={`${phonemeAvg}%`} helper="/r/, /th/, /v/ 등 핵심 음소"/>
+                        <Kpi icon={Volume2} label="유창성(WPM)" value={`${Math.round(wpmNow)}`} helper="분당 단어 수"/>
+                        <Kpi icon={Clock} label="연속 학습" value={`${streaks[0].value}일`} helper="꾸준함 지표"/>
+                    </div>
+
+                    {/* Tabs */}
+                    <Tabs defaultValue="overview" className="w-full">
+                        <TabsList className="grid grid-cols-5 rounded-2xl h-auto p-1">
+                            <TabsTrigger value="overview">개요</TabsTrigger>
+                            <TabsTrigger value="vocab">어휘</TabsTrigger>
+                            <TabsTrigger value="pron">발음</TabsTrigger>
+                            <TabsTrigger value="habit">습관</TabsTrigger>
+                            <TabsTrigger value="bench">또래 비교</TabsTrigger>
+                        </TabsList>
+
+                        {/* 개요 */}
+                        <TabsContent value="overview" className="space-y-4 mt-4">
+                            <div className="grid lg:grid-cols-3 gap-4">
+                                <Card className="rounded-2xl">
+                                    <CardHeader className="pb-2"><CardTitle className="text-base">난이도-보정 정답률 추이</CardTitle></CardHeader>
+                                    <CardContent className="h-64">
+                                        <ResponsiveContainer width="100%" height="100%">
+                                            <AreaChart data={vocabDifficultyData} margin={{ left: 0, right: 0, top: 10, bottom: 0 }}>
+                                                <defs>
+                                                    <linearGradient id="adj" x1="0" y1="0" x2="0" y2="1">
+                                                        <stop offset="5%" stopColor="#8884d8" stopOpacity={0.25}/>
+                                                        <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
+                                                    </linearGradient>
+                                                </defs>
+                                                <CartesianGrid strokeDasharray="3 3" />
+                                                <XAxis dataKey="month" tick={{fontSize: 12}} />
+                                                <YAxis domain={[40, 100]} tickFormatter={(v)=>`${v}%`} tick={{fontSize: 12}} width={40}/>
+                                                <Tooltip formatter={(v)=>`${v}%`}/>
+                                                <Area type="monotone" dataKey="adjAcc" strokeWidth={2} stroke="#8884d8" fill="url(#adj)" name="난이도-보정 정답률"/>
+                                            </AreaChart>
+                                        </ResponsiveContainer>
+                                    </CardContent>
+                                </Card>
+
+                                <Card className="rounded-2xl">
+                                    <CardHeader className="pb-2"><CardTitle className="text-base">음소 정확도 분포</CardTitle></CardHeader>
+                                    <CardContent className="h-64">
+                                        <ResponsiveContainer width="100%" height="100%">
+                                            <RadarChart cx="50%" cy="50%" outerRadius="80%" data={phonemeAccuracy}>
+                                                <PolarGrid />
+                                                <PolarAngleAxis dataKey="sound" tick={{fontSize: 12}} />
+                                                <PolarRadiusAxis angle={30} domain={[40, 100]} tickFormatter={(v)=>`${v}%`} tick={{fontSize: 10}}/>
+                                                <Radar name="정확도" dataKey="value" stroke="#82ca9d" fill="#82ca9d" fillOpacity={0.6} />
+                                                <Legend />
+                                                <Tooltip />
+                                            </RadarChart>
+                                        </ResponsiveContainer>
+                                    </CardContent>
+                                </Card>
+
+                                <Card className="rounded-2xl">
+                                    <CardHeader className="pb-2"><CardTitle className="text-base">유창성(WPM) & 멈춤 횟수</CardTitle></CardHeader>
+                                    <CardContent className="h-64">
+                                        <ResponsiveContainer width="100%" height="100%">
+                                            <LineChart data={fluencyTrend}>
+                                                <CartesianGrid strokeDasharray="3 3" />
+                                                <XAxis dataKey="month" tick={{fontSize: 12}} />
+                                                <YAxis yAxisId="left" orientation="left" tick={{fontSize: 12}} width={30}/>
+                                                <YAxis yAxisId="right" orientation="right" tick={{fontSize: 12}} width={30}/>
+                                                <Tooltip />
+                                                <Line yAxisId="left" type="monotone" dataKey="wpm" stroke="#ffc658" strokeWidth={2} name="WPM" />
+                                                <Line yAxisId="right" type="monotone" dataKey="pause" stroke="#ff7300" strokeDasharray="5 5" name="Pause(회)" />
+                                            </LineChart>
+                                        </ResponsiveContainer>
+                                    </CardContent>
+                                </Card>
+                            </div>
+
+                            <Card className="rounded-2xl">
+                                <CardContent className="p-6 grid md:grid-cols-2 gap-6">
+                                    <div>
+                                        <SectionTitle title="AI 코멘트" hint="난이도-보정, 음소 정확도, 유창성, 재노출 효과 기반"/>
+                                        <ul className="text-sm leading-6 list-disc pl-5">
+                                            <li>최근 3개월 어휘 습득 효율이 안정적으로 상승했습니다. 어려운 단어 구간 정답률이 {pct(vocabDifficultyData[vocabDifficultyData.length-1].hard)}로 개선되었습니다.</li>
+                                            <li>/th/ 발음은 여전히 개선 여지가 있으나, 6개월 전 대비 +{Math.round(phonemeTrend[phonemeTrend.length-1].th - phonemeTrend[0].th)}%p 향상했습니다.</li>
+                                            <li>WPM 증가와 멈춤 감소가 동반되어 유창성 지표가 고르게 개선 중입니다.</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <SectionTitle title="다음 단계 제안" hint="개인 강약점 타깃팅"/>
+                                        <div className="space-y-3">
+                                            <div>
+                                                <div className="text-sm mb-1">형용사 어휘 집중 복습</div>
+                                                <Progress value={72} className="h-2"/>
+                                                <div className="text-xs text-muted-foreground mt-1">현재 정확도 72% → 목표 85%</div>
+                                            </div>
+                                            <div>
+                                                <div className="text-sm mb-1">/th/ 발음 묶음 연습(문장 10개)</div>
+                                                <Progress value={60} className="h-2"/>
+                                                <div className="text-xs text-muted-foreground mt-1">주 3회, 2주간 스프린트 권장</div>
+                                            </div>
+                                            <div>
+                                                <div className="text-sm mb-1">짧은 문장 연결 발화 훈련</div>
+                                                <Progress value={50} className="h-2"/>
+                                                <div className="text-xs text-muted-foreground mt-1">WPM 100+ 유지하며 Pause 1회 이하 목표</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </TabsContent>
+
+                        {/* 어휘 */}
+                        <TabsContent value="vocab" className="space-y-4 mt-4">
+                            <div className="grid md:grid-cols-2 gap-4">
+                                <Card className="rounded-2xl">
+                                    <CardHeader className="pb-2"><CardTitle className="text-base">난이도 구간별 정답률</CardTitle></CardHeader>
+                                    <CardContent className="h-72">
+                                        <ResponsiveContainer width="100%" height="100%">
+                                            <LineChart data={vocabDifficultyData}>
+                                                <CartesianGrid strokeDasharray="3 3" />
+                                                <XAxis dataKey="month" tick={{fontSize: 12}}/>
+                                                <YAxis domain={[40, 100]} tickFormatter={(v)=>`${v}%`} tick={{fontSize: 12}} width={40}/>
+                                                <Tooltip formatter={(v)=>`${v}%`}/>
+                                                <Line type="monotone" dataKey="easy" stroke="#82ca9d" strokeWidth={2} name="쉬움"/>
+                                                <Line type="monotone" dataKey="mid" stroke="#8884d8" strokeWidth={2} name="보통" strokeDasharray="4 2"/>
+                                                <Line type="monotone" dataKey="hard" stroke="#ff7300" strokeWidth={2} name="어려움" strokeDasharray="2 2"/>
+                                                <Legend />
+                                            </LineChart>
+                                        </ResponsiveContainer>
+                                    </CardContent>
+                                </Card>
+
+                                <Card className="rounded-2xl">
+                                    <CardHeader className="pb-2"><CardTitle className="text-base">품사/카테고리별 정확도</CardTitle></CardHeader>
+                                    <CardContent className="h-72">
+                                        <ResponsiveContainer width="100%" height="100%">
+                                            <BarChart data={posAccuracy}>
+                                                <CartesianGrid strokeDasharray="3 3" />
+                                                <XAxis dataKey="pos" tick={{fontSize: 12}}/>
+                                                <YAxis domain={[40,100]} tickFormatter={(v)=>`${v}%`} tick={{fontSize: 12}} width={40}/>
+                                                <Tooltip formatter={(v)=>`${v}%`}/>
+                                                <Bar dataKey="acc" name="정확도" fill="#8884d8" radius={[4,4,0,0]} />
+                                            </BarChart>
+                                        </ResponsiveContainer>
+                                    </CardContent>
+                                </Card>
+                            </div>
+
+                            <Card className="rounded-2xl">
+                                <CardContent className="p-6">
+                                    <SectionTitle title="재노출 단어 효과" hint="첫 학습 대비 재학습 시 정답률 향상"/>
+                                    <div className="grid md:grid-cols-3 gap-4">
+                                        {[
+                                            { title:"1→2회 노출", from:55, to:88 },
+                                            { title:"2→3회 노출", from:72, to:91 },
+                                            { title:"3→4회 노출", from:80, to:94 },
+                                        ].map((b,idx)=> (
+                                            <Card key={idx} className="rounded-2xl bg-slate-50 border-slate-200">
+                                                <CardContent className="p-4">
+                                                    <div className="text-sm text-muted-foreground">{b.title}</div>
+                                                    <div className="flex items-end gap-3 mt-2">
+                                                        <div className="text-2xl font-semibold">{b.to}%</div>
+                                                        <div className="text-xs text-green-600">+{b.to - b.from}%p</div>
+                                                    </div>
+                                                    <Progress value={b.to} className="h-2 mt-3"/>
+                                                    <div className="text-xs text-muted-foreground mt-1">첫 학습 {b.from}% → 재학습 {b.to}%</div>
+                                                </CardContent>
+                                            </Card>
+                                        ))}
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </TabsContent>
+
+                        {/* 발음 */}
+                        <TabsContent value="pron" className="space-y-4 mt-4">
+                            <div className="grid lg:grid-cols-2 gap-4">
+                                <Card className="rounded-2xl">
+                                    <CardHeader className="pb-2"><CardTitle className="text-base">음소별 정확도 추이</CardTitle></CardHeader>
+                                    <CardContent className="h-80">
+                                        <ResponsiveContainer width="100%" height="100%">
+                                            <LineChart data={phonemeTrend}>
+                                                <CartesianGrid strokeDasharray="3 3" />
+                                                <XAxis dataKey="month" tick={{fontSize: 12}}/>
+                                                <YAxis domain={[40,100]} tickFormatter={(v)=>`${Math.round(v)}%`} tick={{fontSize: 12}} width={40}/>
+                                                <Tooltip formatter={(v)=>`${Math.round(v)}%`}/>
+                                                <Line type="monotone" dataKey="r" name="/r/" stroke="#8884d8" strokeWidth={2}/>
+                                                <Line type="monotone" dataKey="th" name="/th/" stroke="#82ca9d" strokeWidth={2} strokeDasharray="4 2"/>
+                                                <Line type="monotone" dataKey="v" name="/v/" stroke="#ffc658" strokeWidth={2} strokeDasharray="2 2"/>
+                                                <Legend />
+                                            </LineChart>
+                                        </ResponsiveContainer>
+                                    </CardContent>
+                                </Card>
+
+                                <Card className="rounded-2xl">
+                                    <CardHeader className="pb-2"><CardTitle className="text-base">현재 음소 정확도 분포</CardTitle></CardHeader>
+                                    <CardContent className="h-80">
+                                        <ResponsiveContainer width="100%" height="100%">
+                                            <RadarChart cx="50%" cy="50%" outerRadius="80%" data={phonemeAccuracy}>
+                                                <PolarGrid />
+                                                <PolarAngleAxis dataKey="sound" tick={{fontSize: 12}}/>
+                                                <PolarRadiusAxis angle={30} domain={[40, 100]} tickFormatter={(v)=>`${v}%`} tick={{fontSize: 10}}/>
+                                                <Radar name="정확도" dataKey="value" stroke="#8884d8" fill="#8884d8" fillOpacity={0.4} />
+                                                <Legend />
+                                                <Tooltip />
+                                            </RadarChart>
+                                        </ResponsiveContainer>
+                                    </CardContent>
+                                </Card>
+                            </div>
+
+                            <Card className="rounded-2xl">
+                                <CardContent className="p-6 grid md:grid-cols-3 gap-6">
+                                    {[
+                                        { label:"/th/ 교정 스프린트", desc:"문장 10개 묶음 2주", progress: 40 },
+                                        { label:"/r/ vs /l/ 대비 훈련", desc:"최소대립쌍 8세트", progress: 55 },
+                                        { label:"억양/리듬 훈련", desc:"쉐도잉 주 3회", progress: 35 },
+                                    ].map((it, idx)=> (
+                                        <div key={idx} className="space-y-2">
+                                            <div className="text-sm font-medium">{it.label}</div>
+                                            <Progress value={it.progress} className="h-2"/>
+                                            <div className="text-xs text-muted-foreground">{it.desc}</div>
+                                        </div>
+                                    ))}
+                                </CardContent>
+                            </Card>
+                        </TabsContent>
+
+                        {/* 습관 */}
+                        <TabsContent value="habit" className="space-y-4 mt-4">
+                            <div className="grid md:grid-cols-3 gap-4">
+                                {streaks.map((s, i)=> (
+                                    <Card key={i} className="rounded-2xl">
+                                        <CardContent className="p-6">
+                                            <div className="text-sm text-muted-foreground">{s.name}</div>
+                                            <div className="text-2xl font-semibold mt-2">{s.value}<span className="text-sm ml-1 font-normal text-muted-foreground">일</span></div>
+                                            <Progress value={Math.min(100, (s.value/35)*100)} className="h-2 mt-3"/>
+                                        </CardContent>
+                                    </Card>
+                                ))}
+                            </div>
+
+                            <div className="grid md:grid-cols-2 gap-4">
+                                <Card className="rounded-2xl">
+                                    <CardHeader className="pb-2"><CardTitle className="text-base">시간대별 시도/정확도</CardTitle></CardHeader>
+                                    <CardContent className="h-72">
+                                        <ResponsiveContainer width="100%" height="100%">
+                                            <BarChart data={timeOfDay}>
+                                                <CartesianGrid strokeDasharray="3 3" />
+                                                <XAxis dataKey="slot" tick={{fontSize: 12}}/>
+                                                <YAxis yAxisId="left" orientation="left" tick={{fontSize: 12}} width={30}/>
+                                                <YAxis yAxisId="right" orientation="right" domain={[40,100]} tickFormatter={(v)=>`${v}%`} tick={{fontSize: 12}} width={40}/>
+                                                <Tooltip formatter={(v, name)=> name === "acc" ? `${v}%` : v}/>
+                                                <Bar yAxisId="left" dataKey="attempts" name="시도 수" fill="#8884d8" radius={[4,4,0,0]} />
+                                                <Line yAxisId="right" type="monotone" dataKey="acc" name="정확도(%)" stroke="#ff7300" strokeWidth={2} />
+                                            </BarChart>
+                                        </ResponsiveContainer>
+                                    </CardContent>
+                                </Card>
+
+                                <Card className="rounded-2xl">
+                                    <CardHeader className="pb-2"><CardTitle className="text-base">집중 시간대 리코멘드</CardTitle></CardHeader>
+                                    <CardContent className="p-6">
+                                        <div className="text-sm leading-6">저녁 학습(18~21시)에서 정답률이 평균 대비 <b>+8%p</b> 높게 나타납니다. 해당 시간대를 고정 루틴으로 권장합니다.</div>
+                                        <div className="mt-6 grid grid-cols-2 gap-3">
+                                            <Button variant="secondary" className="rounded-2xl">알림 예약 (저녁 8시)</Button>
+                                            <Button className="rounded-2xl">주간 루틴 생성</Button>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </div>
+                        </TabsContent>
+
+                        {/* 또래 비교 */}
+                        <TabsContent value="bench" className="space-y-4 mt-4">
+                            <div className="grid md:grid-cols-3 gap-4">
+                                {peerBenchmarks.map((b, i)=> (
+                                    <Card key={i} className="rounded-2xl">
+                                        <CardContent className="p-6">
+                                            <div className="text-sm text-muted-foreground">{b.metric}</div>
+                                            <div className="flex items-end gap-3 mt-2">
+                                                <div>
+                                                    <div className="text-xs text-muted-foreground mb-1">나</div>
+                                                    <div className="text-2xl font-semibold">{b.self}%</div>
+                                                </div>
+                                                <div>
+                                                    <div className="text-xs text-muted-foreground mb-1">또래 평균</div>
+                                                    <div className="text-xl font-semibold text-muted-foreground">{b.peer}%</div>
+                                                </div>
+                                                <Badge variant="secondary" className="ml-auto rounded-xl bg-green-100 text-green-700 hover:bg-green-200">+{b.self - b.peer}%p</Badge>
+                                            </div>
+                                            <Progress value={b.self} className="h-2 mt-3"/>
+                                        </CardContent>
+                                    </Card>
+                                ))}
+                            </div>
+
+                            <Card className="rounded-2xl">
+                                <CardContent className="p-6">
+                                    <SectionTitle title="인증 & 동기부여"/>
+                                    <div className="grid md:grid-cols-3 gap-4">
+                                        {[
+                                            { icon:Award, title:"발음 마스터 Lv.3", desc:"음소 평균 정확도 80% 이상 4주 유지" },
+                                            { icon:Rocket, title:"어휘 러너", desc:"난이도-보정 75% 이상 8주 연속" },
+                                            { icon:Brain, title:"집중 루틴", desc:"저녁 루틴 4주 연속 달성" },
+                                        ].map((m, i)=> (
+                                            <Card key={i} className="rounded-2xl bg-slate-50 border-slate-200">
+                                                <CardContent className="p-5 flex items-start gap-3">
+                                                    <div className="p-2 rounded-xl bg-white border shadow-sm text-primary"><m.icon className="h-5 w-5"/></div>
+                                                    <div>
+                                                        <div className="text-sm font-medium">{m.title}</div>
+                                                        <div className="text-xs text-muted-foreground mt-1">{m.desc}</div>
+                                                        <Button size="sm" variant="outline" className="mt-3 rounded-xl h-7 text-xs">배지 발급 신청</Button>
+                                                    </div>
+                                                </CardContent>
+                                            </Card>
+                                        ))}
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </TabsContent>
+                    </Tabs>
+
+                    <div className="text-xs text-muted-foreground text-center pt-4 pb-10">© 2025 Yoon's – 학습 리포트 목업 v1. 난이도-보정, 음소 정확도, 유창성 지표는 예시값입니다.</div>
+                </div>
+            );
+        }
+
+        const root = createRoot(document.getElementById("root"));
+        root.render(<LearnerReportDashboard />);
+    </script>
+</body>
+</html>
