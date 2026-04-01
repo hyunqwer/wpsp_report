@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프리미엄 학습 리포트</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Pretendard', 'sans-serif'] },
+                    colors: {
+                        brand: { 50: '#eef2ff', 100: '#e0e7ff', 500: '#6366f1', 600: '#4f46e5', 900: '#312e81' },
+                        success: { 50: '#ecfdf5', 500: '#10b981', 600: '#059669' }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/recharts/umd/Recharts.js"></script>
+    <style>
+        body { background-color: #f8fafc; font-family: 'Pretendard Variable', Pretendard, sans-serif; -webkit-font-smoothing: antialiased; }
+        .recharts-tooltip-cursor { fill: rgba(99, 102, 241, 0.05); }
+        .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        /* 커스텀 스크롤바 */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { 
+            AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
+            RadarChart, PolarGrid, PolarAngleAxis, Radar, LineChart, Line 
+        } = Recharts;
+
+        // UI Components
+        const Card = ({ children, className = "" }) => (
+            <div className={`bg-white rounded-3xl shadow-[0_2px_20px_rgb(0,0,0,0.04)] border border-slate-100/50 overflow-hidden ${className}`}>{children}</div>
+        );
+        const Badge = ({ children, variant = "brand" }) => {
+            const styles = variant === "brand" ? "bg-brand-50 text-brand-600 border-brand-100" : "bg-slate-100 text-slate-600 border-slate-200";
+            return <span className={`px-3 py-1 rounded-full text-xs font-bold border ${styles}`}>{children}</span>;
+        };
+
+        // Mock Data
+        const months = ["3월", "4월", "5월", "6월", "7월", "8월"];
+        const vocabData = months.map((m, i) => ({ month: m, score: Math.round(70 + i * 4.5) }));
+        const phonemeData = [
+            { sound: "/r/", value: 85 }, { sound: "/th/", value: 76 }, { sound: "/v/", value: 88 }, { sound: "/l/", value: 92 }, { sound: "/æ/", value: 82 }
+        ];
+        const fluencyData = months.map((m, i) => ({ month: m, wpm: 75 + i * 4 }));
+
+        function Dashboard() {
+            useEffect(() => { lucide.createIcons(); });
+
+            return (
+                <div className="max-w-6xl mx-auto p-4 md:p-8 space-y-8">
+                    
+                    {/* Header Section */}
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+                        <div>
+                            <div className="flex gap-2 mb-3">
+                                <Badge variant="brand">프리미엄 AI 리포트</Badge>
+                                <Badge variant="neutral">25년 8월 기준</Badge>
+                            </div>
+                            <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
+                                서준이의 영어 자신감이<br/>
+                                <span className="text-brand-600">쑥쑥 자라고 있어요! 🌱</span>
+                            </h1>
+                            <p className="mt-3 text-slate-500 font-medium">초등 4학년 · 강남 센터</p>
+                        </div>
+                        <button className="flex items-center gap-2 bg-slate-900 text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-slate-800 transition-colors shadow-md">
+                            <i data-lucide="download" className="w-4 h-4"></i> PDF 다운로드
+                        </button>
+                    </div>
+
+                    {/* Proactive Idea: Parent Praise Guide (가장 먼저 보여주는 칭찬 요약) */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="bg-gradient-to-br from-brand-500 to-brand-600 rounded-3xl p-8 text-white shadow-lg relative overflow-hidden">
+                            <div className="absolute -right-10 -top-10 opacity-10"><i data-lucide="award" className="w-64 h-64"></i></div>
+                            <h3 className="text-brand-100 font-semibold mb-1">우리 아이 칭찬 포인트 💬</h3>
+                            <p className="text-xl font-bold leading-relaxed mb-6">
+                                "서준아, 지난달보다 어려운 단어도<br/>훨씬 잘 맞히더라! 정말 멋져!"
+                            </p>
+                            <div className="bg-white/20 backdrop-blur-md rounded-2xl p-4 flex items-center gap-4">
+                                <div className="bg-white text-brand-600 p-2 rounded-xl"><i data-lucide="trending-up" className="w-6 h-6"></i></div>
+                                <div>
+                                    <div className="text-sm text-brand-50">어려운 어휘 정답률</div>
+                                    <div className="text-lg font-bold">+12% 수직 상승</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4">
+                            {[
+                                { label: "종합 발음 정확도", value: "84점", trend: "+5점", icon: "mic", color: "text-blue-500", bg: "bg-blue-50" },
+                                { label: "유창성 (분당 단어)", value: "95 WPM", trend: "상위 15%", icon: "wind", color: "text-emerald-500", bg: "bg-emerald-50" },
+                                { label: "연속 학습 기록", value: "32일", trend: "꾸준함 왕", icon: "flame", color: "text-orange-500", bg: "bg-orange-50" },
+                                { label: "집중 최고 시간대", value: "오후 8시", trend: "정답률 최고", icon: "clock", color: "text-purple-500", bg: "bg-purple-50" }
+                            ].map((kpi, idx) => (
+                                <Card key={idx} className="p-6 flex flex-col justify-between hover:shadow-md transition-shadow">
+                                    <div className="flex justify-between items-start mb-4">
+                                        <div className={`p-3 rounded-2xl ${kpi.bg}`}><i data-lucide={kpi.icon} className={`w-5 h-5 ${kpi.color}`}></i></div>
+                                        <span className="text-xs font-bold text-success-600 bg-success-50 px-2 py-1 rounded-lg">{kpi.trend}</span>
+                                    </div>
+                                    <div>
+                                        <div className="text-slate-500 text-sm font-medium">{kpi.label}</div>
+                                        <div className="text-2xl font-extrabold text-slate-800 mt-1">{kpi.value}</div>
+                                    </div>
+                                </Card>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Chart Section */}
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        
+                        {/* Area Chart: 성장 추이 */}
+                        <Card className="lg:col-span-2 p-6">
+                            <div className="flex justify-between items-center mb-6">
+                                <div>
+                                    <h3 className="text-lg font-bold text-slate-800">어휘력 성장 추이</h3>
+                                    <p className="text-sm text-slate-500">6개월간 꾸준히 우상향하고 있어요</p>
+                                </div>
+                            </div>
+                            <div className="h-[280px]">
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <AreaChart data={vocabData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                                        <defs>
+                                            <linearGradient id="colorScore" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.3}/>
+                                                <stop offset="95%" stopColor="#4f46e5" stopOpacity={0}/>
+                                            </linearGradient>
+                                        </defs>
+                                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                                        <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{fill: '#64748b', fontSize: 12}} dy={10} />
+                                        <YAxis axisLine={false} tickLine={false} tick={{fill: '#64748b', fontSize: 12}} />
+                                        <Tooltip 
+                                            contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}
+                                            itemStyle={{ color: '#4f46e5', fontWeight: 'bold' }}
+                                        />
+                                        <Area type="monotone" dataKey="score" name="종합 점수" stroke="#4f46e5" strokeWidth={4} fillOpacity={1} fill="url(#colorScore)" />
+                                    </AreaChart>
+                                </ResponsiveContainer>
+                            </div>
+                        </Card>
+
+                        {/* Radar Chart: 발음 밸런스 */}
+                        <Card className="p-6">
+                            <h3 className="text-lg font-bold text-slate-800 mb-1">발음 밸런스</h3>
+                            <p className="text-sm text-slate-500 mb-4">/l/ 발음이 원어민 수준이에요</p>
+                            <div className="h-[240px]">
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <RadarChart cx="50%" cy="50%" outerRadius="70%" data={phonemeData}>
+                                        <PolarGrid stroke="#e2e8f0" />
+                                        <PolarAngleAxis dataKey="sound" tick={{ fill: '#475569', fontSize: 14, fontWeight: 'bold' }} />
+                                        <Radar name="정확도" dataKey="value" stroke="#0ea5e9" strokeWidth={3} fill="#38bdf8" fillOpacity={0.4} />
+                                    </RadarChart>
+                                </ResponsiveContainer>
+                            </div>
+                        </Card>
+                    </div>
+
+                    {/* Proactive Idea: Actionable Home Guide */}
+                    <Card className="p-1">
+                        <div className="bg-slate-50 rounded-[22px] p-6 md:p-8 flex flex-col md:flex-row gap-8 items-center">
+                            <div className="flex-shrink-0 bg-white p-4 rounded-3xl shadow-sm">
+                                <i data-lucide="book-open-check" className="w-12 h-12 text-brand-500"></i>
+                            </div>
+                            <div className="flex-grow">
+                                <h3 className="text-xl font-bold text-slate-800 mb-2">가정 연계 학습 가이드 💡</h3>
+                                <p className="text-slate-600 leading-relaxed mb-4">
+                                    서준이는 현재 <b>형용사 어휘</b>와 <b>/th/ 발음</b>을 집중적으로 다듬으면 유창성이 폭발적으로 늘어나는 시기입니다. 이번 주말에는 가족과 함께 주변 사물을 영어 형용사로 묘사하는 스피드 게임을 해보시는 건 어떨까요?
+                                </p>
+                                <div className="flex gap-3">
+                                    <span className="bg-white border border-slate-200 text-slate-600 px-3 py-1.5 rounded-lg text-sm font-semibold flex items-center gap-1">
+                                        <i data-lucide="target" className="w-4 h-4 text-rose-500"></i> /th/ 혀 위치 교정
+                                    </span>
+                                    <span className="bg-white border border-slate-200 text-slate-600 px-3 py-1.5 rounded-lg text-sm font-semibold flex items-center gap-1">
+                                        <i data-lucide="sparkles" className="w-4 h-4 text-amber-500"></i> 형용사 10개 복습
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+
+                    <div className="text-center pt-8 pb-4">
+                        <p className="text-sm font-semibold text-slate-400">© 2026 프리미엄 초등 영어 분석 시스템</p>
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<Dashboard />);
+    </script>
+</body>
+</html>
