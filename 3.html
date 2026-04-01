@@ -1,1123 +1,727 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>서준이의 영어 성장 리포트 · 26년 4월</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>서준이의 영어 성장 리포트 · 26년 4월</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --brand:#5c6ef8;--brand2:#a78bfa;--rose:#ff6b9d;--amber:#ffb347;--teal:#2dd4bf;
+  --text:#0f172a;--sub:#475569;--muted:#94a3b8;--bg:#f1f5f9;--card:#fff;
+  --r-xl:24px;--r-2xl:32px;
+  --sh:0 4px 24px rgba(15,23,42,.06),0 1px 4px rgba(15,23,42,.04);
+  --sh-lg:0 12px 40px rgba(15,23,42,.12),0 4px 16px rgba(15,23,42,.06);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);font-family:'Pretendard Variable',Pretendard,Nunito,sans-serif;color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 10% -10%,rgba(92,110,248,.1) 0%,transparent 60%),radial-gradient(ellipse 60% 50% at 90% 110%,rgba(167,139,250,.08) 0%,transparent 60%);pointer-events:none;z-index:0}
 
-    <!-- Libraries -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://unpkg.com/react-is@18/umd/react-is.production.min.js"></script>
-    <script src="https://unpkg.com/prop-types@15.8.1/prop-types.min.js"></script>
-    <script src="https://unpkg.com/recharts@2.12.3/umd/Recharts.js"></script>
+/* layout */
+.wrap{max-width:1100px;margin:0 auto;padding:24px 16px 64px;display:flex;flex-direction:column;gap:22px;position:relative;z-index:1}
 
-    <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* hero */
+.hero{border-radius:var(--r-2xl);padding:36px 36px 30px;position:relative;overflow:hidden;background:linear-gradient(135deg,#4355e8 0%,#5c6ef8 40%,#7b5cfa 70%,#a78bfa 100%);animation:fadeUp .5s ease both}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(40px);pointer-events:none}
+.hero-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:18px;position:relative;z-index:1}
+.hero h1{font-size:clamp(1.4rem,3.5vw,2.1rem);font-weight:900;color:#fff;line-height:1.25;letter-spacing:-.02em;margin:12px 0 8px}
+.hero h1 span{color:#ffe066}
+.hero-sub{color:rgba(255,255,255,.65);font-size:13px;font-weight:600}
+.hero-actions{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap}
+.streak-box{background:rgba(255,255,255,.15);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.25);border-radius:18px;padding:12px 18px;text-align:center;min-width:72px}
+.streak-box .n{font-size:1.4rem;font-weight:900;color:#fff;line-height:1.1}
+.streak-box .l{font-size:10px;color:rgba(255,255,255,.6);font-weight:700;margin-top:2px}
+.btn-dl{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.18);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.32);border-radius:14px;color:#fff;padding:11px 18px;font-size:13px;font-weight:800;cursor:pointer;font-family:inherit;transition:background .2s}
+.btn-dl:hover{background:rgba(255,255,255,.28)}
+.praise-strip{margin-top:22px;background:rgba(255,255,255,.13);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.2);border-radius:16px;padding:15px 20px;display:flex;align-items:center;gap:14px;position:relative;z-index:1;flex-wrap:wrap}
+.praise-icon{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#ffe066,#ffb347);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.praise-text{flex:1;min-width:180px}
+.praise-text .lbl{font-size:11px;color:rgba(255,255,255,.55);font-weight:700;margin-bottom:3px}
+.praise-text .q{font-size:14px;font-weight:800;color:#fff;line-height:1.45}
+.praise-badge{background:linear-gradient(135deg,#10b981,#2dd4bf);border-radius:10px;padding:5px 12px;color:#fff;font-size:11px;font-weight:900;white-space:nowrap;flex-shrink:0}
 
-        :root {
-            --brand-50: #f0f4ff;
-            --brand-100: #e0e9ff;
-            --brand-400: #7b8ff0;
-            --brand-500: #5c6ef8;
-            --brand-600: #4355e8;
-            --brand-700: #3344cc;
-            --brand-900: #1a2566;
-            --accent-rose: #ff6b9d;
-            --accent-amber: #ffb347;
-            --accent-teal: #2dd4bf;
-            --accent-violet: #a78bfa;
-            --text-primary: #0f172a;
-            --text-secondary: #475569;
-            --text-muted: #94a3b8;
-            --bg-base: #f1f5f9;
-            --bg-card: #ffffff;
-            --radius-xl: 24px;
-            --radius-2xl: 32px;
-            --shadow-card: 0 4px 24px rgba(15,23,42,0.06), 0 1px 4px rgba(15,23,42,0.04);
-            --shadow-elevated: 0 12px 48px rgba(15,23,42,0.12), 0 4px 16px rgba(15,23,42,0.06);
-        }
+/* badges */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border-radius:99px;font-size:11px;font-weight:800;letter-spacing:.02em}
+.badge-glass{background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(8px)}
+.badge-brand{background:linear-gradient(135deg,#eef2ff,#e0e9ff);color:#4355e8;border:1px solid rgba(92,110,248,.2)}
+.badge-success{background:linear-gradient(135deg,#ecfdf5,#d1fae5);color:#059669;border:1px solid rgba(16,185,129,.2)}
+.badge-rose{background:linear-gradient(135deg,#fff0f6,#ffe4ef);color:#e11d48;border:1px solid rgba(225,29,72,.15)}
+.badge-amber{background:linear-gradient(135deg,#fffbeb,#fef3c7);color:#d97706;border:1px solid rgba(217,119,6,.2)}
+.badge-neutral{background:#f1f5f9;color:var(--sub);border:1px solid #e2e8f0}
 
-        html { scroll-behavior: smooth; }
+/* kpi grid */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.kpi{background:var(--card);border-radius:var(--r-xl);box-shadow:var(--sh);border:1px solid rgba(255,255,255,.8);padding:22px;position:relative;overflow:hidden;transition:transform .25s,box-shadow .25s;animation:fadeUp .5s ease both}
+.kpi:hover{transform:translateY(-3px);box-shadow:var(--sh-lg)}
+.kpi-glow{position:absolute;width:80px;height:80px;border-radius:50%;filter:blur(28px);opacity:.22;top:-16px;right:-16px}
+.kpi-icon{width:42px;height:42px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-size:20px}
+.kpi-trend{position:absolute;top:18px;right:18px}
+.kpi-label{font-size:11px;font-weight:700;color:var(--muted);margin-bottom:4px}
+.kpi-val{font-size:2.2rem;font-weight:900;color:var(--text);line-height:1;letter-spacing:-.03em}
+.kpi-val span{font-size:1rem;font-weight:700;color:var(--sub);margin-left:3px}
 
-        body {
-            background: var(--bg-base);
-            font-family: 'Pretendard Variable', Pretendard, 'Nunito', sans-serif;
-            color: var(--text-primary);
-            -webkit-font-smoothing: antialiased;
-            min-height: 100vh;
-        }
+/* tab bar */
+.tabs{background:rgba(255,255,255,.88);backdrop-filter:blur(12px);border-radius:18px;padding:6px;display:flex;gap:4px;border:1px solid rgba(255,255,255,.9);box-shadow:var(--sh);flex-wrap:wrap}
+.tab-btn{flex:1;padding:9px 12px;border-radius:12px;border:none;cursor:pointer;font-family:inherit;font-size:12px;font-weight:700;transition:all .2s;color:var(--sub);background:transparent;white-space:nowrap;min-width:70px}
+.tab-btn.active{background:linear-gradient(135deg,#4355e8,#7b5cfa);color:#fff;box-shadow:0 4px 14px rgba(67,85,232,.32)}
+.tab-btn:not(.active):hover{background:#f0f4ff;color:var(--brand)}
 
-        /* ── Animated background ── */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background:
-                radial-gradient(ellipse 80% 60% at 10% -10%, rgba(92,110,248,0.12) 0%, transparent 60%),
-                radial-gradient(ellipse 60% 50% at 90% 110%, rgba(167,139,250,0.10) 0%, transparent 60%);
-            pointer-events: none;
-            z-index: 0;
-        }
+/* tab content */
+.tab-panel{display:none;animation:fadeUp .3s ease both}
+.tab-panel.active{display:block}
 
-        #root { position: relative; z-index: 1; }
+/* cards */
+.card{background:var(--card);border-radius:var(--r-xl);box-shadow:var(--sh);border:1px solid rgba(255,255,255,.8);overflow:hidden;transition:transform .25s,box-shadow .25s}
+.card:hover{transform:translateY(-2px);box-shadow:var(--sh-lg)}
+.card-body{padding:26px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:760px){.grid-2,.grid-3{grid-template-columns:1fr}}
+.grid-2-1{display:grid;grid-template-columns:2fr 1fr;gap:18px}
+@media(max-width:900px){.grid-2-1{grid-template-columns:1fr}}
 
-        /* ── Scrollbar ── */
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }
+/* section title */
+.st{font-size:1rem;font-weight:800;color:var(--text)}
+.ss{font-size:.78rem;color:var(--muted);margin-top:3px}
 
-        /* ── Glass card ── */
-        .glass {
-            background: rgba(255,255,255,0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-        }
+/* progress */
+.pbar-track{width:100%;height:8px;background:#f1f5f9;border-radius:99px;overflow:hidden;margin-top:6px}
+.pbar-fill{height:100%;border-radius:99px;transition:width 1s ease}
+.pbar-brand{background:linear-gradient(90deg,#5c6ef8,#a78bfa)}
+.pbar-teal{background:linear-gradient(90deg,#2dd4bf,#10b981)}
+.pbar-amber{background:linear-gradient(90deg,#ffb347,#ff6b9d)}
+.pbar-slate{background:#cbd5e1}
 
-        /* ── Animations ── */
-        @keyframes fadeUp {
-            from { opacity:0; transform:translateY(20px); }
-            to   { opacity:1; transform:translateY(0); }
-        }
-        @keyframes scaleIn {
-            from { opacity:0; transform:scale(0.94); }
-            to   { opacity:1; transform:scale(1); }
-        }
-        @keyframes shimmer {
-            0%   { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
-        @keyframes float {
-            0%,100% { transform: translateY(0px); }
-            50%      { transform: translateY(-8px); }
-        }
-        @keyframes pulse-ring {
-            0%   { transform:scale(1); opacity:.7; }
-            70%  { transform:scale(1.3); opacity:0; }
-            100% { transform:scale(1.3); opacity:0; }
-        }
-        @keyframes gradientShift {
-            0%,100% { background-position: 0% 50%; }
-            50%      { background-position: 100% 50%; }
-        }
-        @keyframes sparkle {
-            0%,100% { opacity:1; transform:scale(1) rotate(0deg); }
-            50%      { opacity:.6; transform:scale(1.2) rotate(15deg); }
-        }
-        @keyframes countUp {
-            from { opacity:0; transform: translateY(12px); }
-            to   { opacity:1; transform: translateY(0); }
-        }
-        @keyframes progressFill {
-            from { width: 0; }
-        }
-        @keyframes tabSlide {
-            from { opacity:0; transform:translateX(16px); }
-            to   { opacity:1; transform:translateX(0); }
-        }
+/* chart wrapper */
+.chart-box{position:relative;height:260px;margin-top:18px}
 
-        .anim-fade-up   { animation: fadeUp .5s ease forwards; }
-        .anim-scale-in  { animation: scaleIn .4s ease forwards; }
-        .anim-tab       { animation: tabSlide .3s ease forwards; }
+/* sprint */
+.sprint-item{background:#fff;border-radius:16px;padding:15px 18px;border:1px solid #f1f5f9;margin-bottom:13px;transition:transform .2s,box-shadow .2s}
+.sprint-item:hover{transform:translateX(4px);box-shadow:0 4px 16px rgba(92,110,248,.1);border-color:rgba(92,110,248,.2)}
+.sprint-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.sprint-left{display:flex;align-items:center;gap:10px}
+.sprint-icon{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
 
-        .stagger-1 { animation-delay:.05s; }
-        .stagger-2 { animation-delay:.10s; }
-        .stagger-3 { animation-delay:.15s; }
-        .stagger-4 { animation-delay:.20s; }
+/* peer */
+.peer-card{background:#fff;border-radius:var(--r-xl);padding:26px;border:1px solid #f1f5f9;box-shadow:var(--sh);transition:transform .25s}
+.peer-card:hover{transform:translateY(-3px)}
+.peer-icon{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px}
+.peer-num{font-size:2.2rem;font-weight:900;line-height:1;letter-spacing:-.03em}
+.peer-rank{border-radius:12px;padding:8px 12px;display:flex;align-items:center;gap:6px;margin-top:14px}
 
-        /* ── Gradient text ── */
-        .gradient-text {
-            background: linear-gradient(135deg, #5c6ef8 0%, #a78bfa 50%, #ff6b9d 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .gradient-text-warm {
-            background: linear-gradient(135deg, #ffb347 0%, #ff6b9d 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+/* insight pills row */
+.pills{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+.pill{border-radius:14px;padding:11px 16px;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:82px;flex:1;text-align:center}
+.pill-n{font-size:11px;font-weight:700;color:#64748b}
+.pill-v{font-size:1.05rem;font-weight:900}
 
-        /* ── Hero gradient ── */
-        .hero-gradient {
-            background: linear-gradient(135deg, #4355e8 0%, #5c6ef8 40%, #7b5cfa 70%, #a78bfa 100%);
-            background-size: 200% 200%;
-            animation: gradientShift 8s ease infinite;
-        }
+/* guide box */
+.guide{background:linear-gradient(135deg,#f0f4ff,#faf5ff);border:1px solid rgba(92,110,248,.12);border-radius:var(--r-xl);padding:26px 30px;display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.guide-icon{background:#fff;border-radius:18px;width:58px;height:58px;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 4px 14px rgba(92,110,248,.12);flex-shrink:0}
 
-        /* ── Card base ── */
-        .card {
-            background: var(--bg-card);
-            border-radius: var(--radius-xl);
-            box-shadow: var(--shadow-card);
-            border: 1px solid rgba(255,255,255,0.8);
-            overflow: hidden;
-            transition: transform .25s ease, box-shadow .25s ease;
-        }
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-elevated);
-        }
-        .card-glass {
-            background: rgba(255,255,255,0.7);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-radius: var(--radius-xl);
-            border: 1px solid rgba(255,255,255,0.9);
-            box-shadow: var(--shadow-card);
-        }
+/* trophy */
+.trophy{background:linear-gradient(135deg,#4355e8,#7b5cfa,#a78bfa);border-radius:var(--r-xl);padding:26px 30px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;box-shadow:0 8px 32px rgba(67,85,232,.28)}
+.trophy-emoji{font-size:48px;line-height:1;animation:float 3s ease-in-out infinite}
+.trophy-stat{background:rgba(255,255,255,.18);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.3);border-radius:14px;padding:14px 22px;text-align:center;margin-left:auto}
 
-        /* ── KPI card ── */
-        .kpi-card {
-            position: relative;
-            overflow: hidden;
-            border-radius: var(--radius-xl);
-            background: white;
-            border: 1px solid rgba(255,255,255,0.8);
-            box-shadow: var(--shadow-card);
-            padding: 1.5rem;
-            transition: transform .25s ease, box-shadow .25s ease;
-        }
-        .kpi-card::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, transparent 50%, rgba(255,255,255,0.6));
-            pointer-events: none;
-        }
-        .kpi-card:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-elevated);
-        }
-        .kpi-glow {
-            position: absolute;
-            width: 80px; height: 80px;
-            border-radius: 50%;
-            filter: blur(28px);
-            opacity: .25;
-            top: -16px; right: -16px;
-        }
+/* habit insight cards */
+.hcard{background:#fff;border-radius:18px;padding:18px;border-left:3px solid}
+.hcard .emoji{font-size:22px;margin-bottom:8px}
+.hcard .title{font-size:13px;font-weight:800;margin-bottom:5px}
+.hcard .body{font-size:12px;color:var(--sub);line-height:1.6}
 
-        /* ── Tab bar ── */
-        .tab-bar {
-            background: rgba(255,255,255,0.85);
-            backdrop-filter: blur(12px);
-            border-radius: 20px;
-            padding: 6px;
-            display: flex;
-            gap: 4px;
-            border: 1px solid rgba(255,255,255,0.9);
-            box-shadow: 0 2px 16px rgba(15,23,42,0.06);
-        }
-        .tab-btn {
-            flex: 1;
-            padding: 10px 14px;
-            border-radius: 14px;
-            border: none;
-            cursor: pointer;
-            font-family: inherit;
-            font-size: 13px;
-            font-weight: 700;
-            transition: all .22s ease;
-            color: var(--text-secondary);
-            background: transparent;
-            white-space: nowrap;
-        }
-        .tab-btn.active {
-            background: linear-gradient(135deg, #4355e8 0%, #7b5cfa 100%);
-            color: white;
-            box-shadow: 0 4px 16px rgba(67,85,232,0.35);
-        }
-        .tab-btn:not(.active):hover {
-            background: var(--brand-50);
-            color: var(--brand-600);
-        }
+/* animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes gradShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+@keyframes countUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
-        /* ── Progress bar ── */
-        .progress-track {
-            width: 100%;
-            height: 8px;
-            background: #f1f5f9;
-            border-radius: 99px;
-            overflow: hidden;
-        }
-        .progress-fill {
-            height: 100%;
-            border-radius: 99px;
-            background: linear-gradient(90deg, #5c6ef8, #a78bfa);
-            animation: progressFill .9s ease both;
-        }
-        .progress-fill-success {
-            background: linear-gradient(90deg, #2dd4bf, #10b981);
-        }
-        .progress-fill-warn {
-            background: linear-gradient(90deg, #ffb347, #ff6b9d);
-        }
+/* stagger */
+.s1{animation-delay:.05s}.s2{animation-delay:.10s}.s3{animation-delay:.15s}.s4{animation-delay:.20s}
 
-        /* ── Badge ── */
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 4px 12px;
-            border-radius: 99px;
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: .02em;
-        }
-        .badge-brand {
-            background: linear-gradient(135deg, var(--brand-50), #e8edff);
-            color: var(--brand-600);
-            border: 1px solid rgba(92,110,248,.2);
-        }
-        .badge-success {
-            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
-            color: #059669;
-            border: 1px solid rgba(16,185,129,.2);
-        }
-        .badge-rose {
-            background: linear-gradient(135deg, #fff0f6, #ffe4ef);
-            color: #e11d48;
-            border: 1px solid rgba(225,29,72,.15);
-        }
-        .badge-amber {
-            background: linear-gradient(135deg, #fffbeb, #fef3c7);
-            color: #d97706;
-            border: 1px solid rgba(217,119,6,.2);
-        }
-        .badge-neutral {
-            background: #f1f5f9;
-            color: var(--text-secondary);
-            border: 1px solid #e2e8f0;
-        }
-
-        /* ── Insight box ── */
-        .insight-box {
-            background: linear-gradient(135deg, #f0f4ff 0%, #faf5ff 100%);
-            border: 1px solid rgba(92,110,248,.12);
-            border-radius: 18px;
-            padding: 20px 24px;
-        }
-
-        /* ── Achievement ── */
-        .achievement-ring {
-            position: relative;
-        }
-        .achievement-ring::before {
-            content: '';
-            position: absolute;
-            inset: -4px;
-            border-radius: 50%;
-            background: conic-gradient(#5c6ef8 0%, #a78bfa 50%, #ff6b9d 80%, #5c6ef8 100%);
-            animation: gradientShift 3s linear infinite;
-        }
-
-        /* ── Tooltip custom ── */
-        .custom-tooltip {
-            background: rgba(15,23,42,0.92);
-            backdrop-filter: blur(12px);
-            border-radius: 14px;
-            padding: 10px 14px;
-            color: white;
-            font-size: 12px;
-            font-weight: 600;
-            border: 1px solid rgba(255,255,255,.1);
-            box-shadow: 0 8px 32px rgba(0,0,0,.24);
-        }
-
-        /* ── Floating orb decorations ── */
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(40px);
-            pointer-events: none;
-        }
-
-        /* ── Stat number ── */
-        .stat-num {
-            font-size: 2.4rem;
-            font-weight: 900;
-            line-height: 1;
-            letter-spacing: -.03em;
-        }
-
-        /* ── Recharts overrides ── */
-        .recharts-tooltip-wrapper { outline: none !important; }
-        .recharts-default-tooltip {
-            background: rgba(15,23,42,0.9) !important;
-            border: none !important;
-            border-radius: 14px !important;
-            color: white !important;
-            font-size: 12px !important;
-            box-shadow: 0 8px 32px rgba(0,0,0,.2) !important;
-        }
-        .recharts-tooltip-label { color: #94a3b8 !important; font-size: 11px !important; }
-        .recharts-tooltip-item  { color: white !important; }
-
-        /* ── Sprint item ── */
-        .sprint-item {
-            background: white;
-            border-radius: 16px;
-            padding: 16px 20px;
-            border: 1px solid #f1f5f9;
-            transition: transform .2s ease, box-shadow .2s ease;
-        }
-        .sprint-item:hover {
-            transform: translateX(4px);
-            box-shadow: 0 4px 20px rgba(92,110,248,.1);
-            border-color: rgba(92,110,248,.2);
-        }
-
-        /* ── Peer compare ── */
-        .peer-card {
-            background: white;
-            border-radius: var(--radius-xl);
-            padding: 28px;
-            border: 1px solid #f1f5f9;
-            box-shadow: var(--shadow-card);
-            transition: transform .25s ease;
-        }
-        .peer-card:hover { transform: translateY(-3px); }
-
-        /* ── Section title ── */
-        .section-title { font-size: 1.05rem; font-weight: 800; color: var(--text-primary); }
-        .section-sub   { font-size: .8rem; color: var(--text-muted); margin-top: 2px; }
-
-        /* ── Mobile ── */
-        @media (max-width: 768px) {
-            .stat-num { font-size: 1.8rem; }
-            .tab-btn  { padding: 8px 10px; font-size: 12px; }
-        }
-    </style>
+/* footer */
+.footer{text-align:center;padding-top:8px;font-size:12px;color:var(--muted);font-weight:600}
+</style>
 </head>
 <body>
-<div id="root"></div>
+<div class="wrap">
 
-<script type="text/babel">
-const { useState, useEffect, useRef, useCallback } = React;
-const {
-    AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-    RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar,
-    LineChart, Line, BarChart, Bar, Legend, ComposedChart
-} = Recharts;
-
-/* ─── Data ─── */
-const months = ["11월","12월","1월","2월","3월","4월"];
-
-const vocabData = months.map((m,i) => ({ month:m, score: Math.round(70+i*4.5) }));
-
-const phonemeData = [
-    {sound:"/r/",value:85},{sound:"/th/",value:76},{sound:"/v/",value:88},
-    {sound:"/l/",value:92},{sound:"/æ/",value:82}
-];
-
-const vocabDifficultyData = months.map((m,i) => ({
-    month:m,
-    easy: Math.round(88+Math.sin(i)*4),
-    mid:  Math.round(75+i*1.2),
-    hard: Math.round(55+i*2),
-}));
-
-const posAccuracy = [
-    {pos:"동사",acc:88},{pos:"형용사",acc:72},{pos:"명사",acc:81},
-    {pos:"일상표현",acc:93},{pos:"전치사",acc:68}
-];
-
-const phonemeTrend = months.map((m,i) => ({
-    month:m, r:68+i*1.7, th:55+i*2.8, v:74+i*1.9
-}));
-
-const timeOfDay = [
-    {slot:"오전",attempts:120,acc:74},
-    {slot:"오후",attempts:260,acc:77},
-    {slot:"저녁",attempts:410,acc:85},
-];
-
-const peerBenchmarks = [
-    {metric:"난이도-보정 어휘 정확도",   self:78, peer:72, icon:"brain",      color:"#5c6ef8", bg:"#f0f4ff"},
-    {metric:"발음 정확도 (음소 평균)",    self:84, peer:76, icon:"mic",        color:"#2dd4bf", bg:"#f0fdfa"},
-    {metric:"유창성 (WPM)",              self:95, peer:82, icon:"wind",       color:"#ff6b9d", bg:"#fff0f6"},
-];
-
-/* ─── Custom Tooltip ─── */
-const CustomTooltip = ({ active, payload, label }) => {
-    if (!active || !payload?.length) return null;
-    return (
-        <div className="custom-tooltip">
-            <div style={{color:'#94a3b8',fontSize:'11px',marginBottom:'6px'}}>{label}</div>
-            {payload.map((p,i) => (
-                <div key={i} style={{display:'flex',alignItems:'center',gap:'6px',marginTop:'3px'}}>
-                    <span style={{width:'8px',height:'8px',borderRadius:'50%',background:p.color,flexShrink:0}}></span>
-                    <span style={{color:'#94a3b8'}}>{p.name}</span>
-                    <span style={{marginLeft:'auto',fontWeight:900}}>{p.value}{typeof p.value==='number' && p.value<200 ? '점' : ''}</span>
-                </div>
-            ))}
+  <!-- ── HERO ── -->
+  <div class="hero">
+    <div class="hero-orb" style="width:180px;height:180px;background:rgba(255,255,255,.1);top:-60px;right:10%;animation:float 6s ease-in-out infinite"></div>
+    <div class="hero-orb" style="width:110px;height:110px;background:rgba(167,139,250,.18);bottom:-30px;right:5%;animation:float 8s ease-in-out infinite 1s"></div>
+    <div class="hero-top">
+      <div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <span class="badge badge-glass">✨ 프리미엄 AI 리포트</span>
+          <span class="badge badge-glass">26년 4월 기준</span>
         </div>
-    );
-};
+        <h1>서준이의 영어 자신감이<br><span>쑥쑥 자라고 있어요! 🌱</span></h1>
+        <p class="hero-sub">초등 4학년 · 강남 센터 · 최근 6개월 분석</p>
+      </div>
+      <div class="hero-actions">
+        <div class="streak-box">
+          <div style="font-size:1.6rem">🔥</div>
+          <div class="n">32일</div>
+          <div class="l">연속 학습</div>
+        </div>
+        <button class="btn-dl" onclick="window.print()">⬇ PDF 저장</button>
+      </div>
+    </div>
+    <div class="praise-strip">
+      <div class="praise-icon">💬</div>
+      <div class="praise-text">
+        <div class="lbl">이달의 선생님 칭찬</div>
+        <div class="q">"서준아, 지난달보다 어려운 단어도 훨씬 잘 맞히더라! 정말 멋져!"</div>
+      </div>
+      <div class="praise-badge">어휘 +12% ↑</div>
+    </div>
+  </div>
 
-/* ─── Count-up hook ─── */
-function useCountUp(target, duration=1200, delay=100) {
-    const [count, setCount] = useState(0);
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            const start = Date.now();
-            const tick = () => {
-                const elapsed = Date.now() - start;
-                const progress = Math.min(elapsed / duration, 1);
-                const eased = 1 - Math.pow(1 - progress, 3);
-                setCount(Math.round(eased * target));
-                if (progress < 1) requestAnimationFrame(tick);
-            };
-            requestAnimationFrame(tick);
-        }, delay);
-        return () => clearTimeout(timer);
-    }, [target, duration, delay]);
-    return count;
+  <!-- ── KPI ── -->
+  <div class="kpi-grid">
+    <div class="kpi s1">
+      <div class="kpi-glow" style="background:#5c6ef8"></div>
+      <div class="kpi-icon" style="background:#eef2ff">🎤</div>
+      <div class="kpi-trend"><span class="badge badge-success">+5점</span></div>
+      <div class="kpi-label">종합 발음 정확도</div>
+      <div class="kpi-val" data-target="84">0<span>점</span></div>
+    </div>
+    <div class="kpi s2">
+      <div class="kpi-glow" style="background:#2dd4bf"></div>
+      <div class="kpi-icon" style="background:#f0fdfa">💨</div>
+      <div class="kpi-trend"><span class="badge badge-success">상위 15%</span></div>
+      <div class="kpi-label">유창성 (WPM)</div>
+      <div class="kpi-val" data-target="95">0<span>WPM</span></div>
+    </div>
+    <div class="kpi s3">
+      <div class="kpi-glow" style="background:#ff6b9d"></div>
+      <div class="kpi-icon" style="background:#fff0f6">🔥</div>
+      <div class="kpi-trend"><span class="badge badge-success">꾸준함 왕</span></div>
+      <div class="kpi-label">연속 학습 기록</div>
+      <div class="kpi-val" data-target="32">0<span>일</span></div>
+    </div>
+    <div class="kpi s4">
+      <div class="kpi-glow" style="background:#a78bfa"></div>
+      <div class="kpi-icon" style="background:#faf5ff">⏰</div>
+      <div class="kpi-trend"><span class="badge badge-success">정답률 최고</span></div>
+      <div class="kpi-label">집중 최고 시간대</div>
+      <div class="kpi-val" style="font-size:1.5rem">오후 8시</div>
+    </div>
+  </div>
+
+  <!-- ── TABS ── -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('overview',this)">📊 개요</button>
+    <button class="tab-btn" onclick="switchTab('vocab',this)">📖 어휘 상세</button>
+    <button class="tab-btn" onclick="switchTab('pron',this)">🎤 발음 상세</button>
+    <button class="tab-btn" onclick="switchTab('habit',this)">⏰ 학습 습관</button>
+    <button class="tab-btn" onclick="switchTab('bench',this)">🏆 또래 비교</button>
+  </div>
+
+  <!-- ── TAB PANELS ── -->
+
+  <!-- 1. 개요 -->
+  <div id="tab-overview" class="tab-panel active">
+    <div class="grid-2-1">
+      <div class="card">
+        <div class="card-body">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px">
+            <div><div class="st">어휘력 성장 추이</div><div class="ss">최근 6개월 꾸준히 우상향 📈</div></div>
+            <span class="badge badge-brand">6개월 분석</span>
+          </div>
+          <div class="chart-box"><canvas id="chartVocab"></canvas></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="st">발음 밸런스</div>
+          <div class="ss">/l/ 발음이 원어민 수준이에요 ⭐</div>
+          <div class="chart-box" style="height:220px"><canvas id="chartRadar"></canvas></div>
+          <div class="pills" style="margin-top:12px">
+            <div class="pill" style="background:#eef2ff;border:1px solid rgba(92,110,248,.15)">
+              <div class="pill-n">/r/</div><div class="pill-v" style="color:#5c6ef8">85</div>
+            </div>
+            <div class="pill" style="background:#f0fdfa;border:1px solid rgba(45,212,191,.15)">
+              <div class="pill-n">/th/</div><div class="pill-v" style="color:#2dd4bf">76</div>
+            </div>
+            <div class="pill" style="background:#fff0f6;border:1px solid rgba(255,107,157,.15)">
+              <div class="pill-n">/l/</div><div class="pill-v" style="color:#ff6b9d">92</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="guide" style="margin-top:18px">
+      <div class="guide-icon">💡</div>
+      <div style="flex:1;min-width:220px">
+        <div style="font-size:1rem;font-weight:900;margin-bottom:8px">가정 연계 학습 가이드</div>
+        <p style="color:var(--sub);font-size:13px;line-height:1.7">
+          서준이는 현재 <strong style="color:#5c6ef8">형용사 어휘</strong>와 <strong style="color:#ff6b9d">/th/ 발음</strong>을 집중적으로 다듬으면 유창성이 폭발적으로 늘어나는 시기입니다. 이번 주말에는 가족과 함께 주변 사물을 영어 형용사로 묘사하는 <strong>스피드 게임</strong>을 해보시는 건 어떨까요?
+        </p>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-start">
+        <span class="badge badge-brand">형용사 집중</span>
+        <span class="badge badge-rose">/th/ 교정</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. 어휘 상세 -->
+  <div id="tab-vocab" class="tab-panel">
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-body">
+          <div class="st">난이도 구간별 정답률</div>
+          <div class="ss">어려운 단어 정답률이 점진적으로 오르고 있습니다 💪</div>
+          <div class="chart-box"><canvas id="chartVocabDiff"></canvas></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="st">품사별 정확도</div>
+          <div class="ss">동사·일상표현 활용 능력이 뛰어납니다 ⭐</div>
+          <div class="chart-box"><canvas id="chartPos"></canvas></div>
+        </div>
+      </div>
+    </div>
+    <div class="pills" style="margin-top:16px">
+      <div class="pill" style="background:#f0fdfa;border:1px solid rgba(45,212,191,.2)"><div class="pill-n">일상표현</div><div class="pill-v" style="color:#2dd4bf">93점</div></div>
+      <div class="pill" style="background:#eef2ff;border:1px solid rgba(92,110,248,.2)"><div class="pill-n">동사</div><div class="pill-v" style="color:#5c6ef8">88점</div></div>
+      <div class="pill" style="background:#faf5ff;border:1px solid rgba(167,139,250,.2)"><div class="pill-n">명사</div><div class="pill-v" style="color:#a78bfa">81점</div></div>
+      <div class="pill" style="background:#fffbeb;border:1px solid rgba(255,179,71,.2)"><div class="pill-n">형용사</div><div class="pill-v" style="color:#d97706">72점</div><div style="font-size:10px;color:#94a3b8">집중 필요</div></div>
+      <div class="pill" style="background:#fff0f6;border:1px solid rgba(255,107,157,.2)"><div class="pill-n">전치사</div><div class="pill-v" style="color:#e11d48">68점</div><div style="font-size:10px;color:#94a3b8">집중 필요</div></div>
+    </div>
+  </div>
+
+  <!-- 3. 발음 상세 -->
+  <div id="tab-pron" class="tab-panel">
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-body">
+          <div class="st">주요 음소 정확도 추이</div>
+          <div class="ss">/th/ 발음이 눈에 띄게 개선되고 있습니다 📈</div>
+          <div class="chart-box"><canvas id="chartPhonemeTrend"></canvas></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="st">발음 교정 추천 스프린트</div>
+          <div style="margin-top:18px">
+            <div class="sprint-item">
+              <div class="sprint-row">
+                <div class="sprint-left">
+                  <div class="sprint-icon" style="background:#fff0f6">🎯</div>
+                  <div>
+                    <div style="font-size:13px;font-weight:800">/th/ 교정 집중 훈련</div>
+                    <div style="font-size:11px;color:var(--muted)">문장 10개 묶음 2주</div>
+                  </div>
+                </div>
+                <span style="font-size:12px;font-weight:900;color:#d97706;background:#fffbeb;padding:3px 10px;border-radius:99px">60%</span>
+              </div>
+              <div class="pbar-track"><div class="pbar-fill pbar-amber" style="width:60%"></div></div>
+            </div>
+            <div class="sprint-item">
+              <div class="sprint-row">
+                <div class="sprint-left">
+                  <div class="sprint-icon" style="background:#f0fdfa">🎙</div>
+                  <div>
+                    <div style="font-size:13px;font-weight:800">/r/ vs /l/ 대비 훈련</div>
+                    <div style="font-size:11px;color:var(--muted)">최소대립쌍 8세트</div>
+                  </div>
+                </div>
+                <span style="font-size:12px;font-weight:900;color:#059669;background:#ecfdf5;padding:3px 10px;border-radius:99px">85%</span>
+              </div>
+              <div class="pbar-track"><div class="pbar-fill pbar-teal" style="width:85%"></div></div>
+            </div>
+            <div class="sprint-item">
+              <div class="sprint-row">
+                <div class="sprint-left">
+                  <div class="sprint-icon" style="background:#fffbeb">🎵</div>
+                  <div>
+                    <div style="font-size:13px;font-weight:800">억양/리듬 쉐도잉</div>
+                    <div style="font-size:11px;color:var(--muted)">원어민 억양 따라하기</div>
+                  </div>
+                </div>
+                <span style="font-size:12px;font-weight:900;color:#d97706;background:#fffbeb;padding:3px 10px;border-radius:99px">45%</span>
+              </div>
+              <div class="pbar-track"><div class="pbar-fill pbar-amber" style="width:45%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. 학습 습관 -->
+  <div id="tab-habit" class="tab-panel">
+    <div class="card" style="margin-bottom:18px">
+      <div class="card-body">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:4px">
+          <div>
+            <div class="st">시간대별 학습 시도 및 정확도</div>
+            <div class="ss">저녁 시간대(오후 8시 전후)에 학습 효율이 가장 높아요 🌙</div>
+          </div>
+          <span class="badge badge-amber">⏰ 오후 8시 = 골든타임</span>
+        </div>
+        <div class="chart-box"><canvas id="chartHabit"></canvas></div>
+      </div>
+    </div>
+    <div class="grid-3">
+      <div class="hcard" style="border-color:#5c6ef8;background:#fff">
+        <div class="emoji">🌙</div>
+        <div class="title">최적 학습 시간</div>
+        <div class="body">오후 7~9시 사이 학습 시 정답률이 평균 11%p 높아요.</div>
+      </div>
+      <div class="hcard" style="border-color:#ff6b9d;background:#fff">
+        <div class="emoji">🔥</div>
+        <div class="title">연속 학습 효과</div>
+        <div class="body">32일 연속 학습 기록! 꾸준함이 실력을 만들어요.</div>
+      </div>
+      <div class="hcard" style="border-color:#2dd4bf;background:#fff">
+        <div class="emoji">📈</div>
+        <div class="title">주간 성장률</div>
+        <div class="body">매주 평균 2.3점씩 점진적으로 성장 중입니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. 또래 비교 -->
+  <div id="tab-bench" class="tab-panel">
+    <div class="grid-3" style="margin-bottom:18px">
+      <!-- card 1 -->
+      <div class="peer-card">
+        <div class="peer-icon" style="background:#eef2ff">🧠</div>
+        <div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:10px">난이도-보정 어휘 정확도</div>
+        <div style="display:flex;align-items:flex-end;gap:10px;margin-bottom:14px">
+          <div class="peer-num">78<span style="font-size:1rem;color:var(--sub);font-weight:700">점</span></div>
+          <div style="background:#ecfdf5;border:1px solid rgba(16,185,129,.2);color:#059669;border-radius:10px;padding:4px 10px;font-size:12px;font-weight:900;margin-bottom:5px">+6점 ↑</div>
+        </div>
+        <div style="margin-bottom:6px">
+          <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:700;margin-bottom:4px"><span>서준이</span><span style="color:#5c6ef8">78점</span></div>
+          <div class="pbar-track" style="height:10px"><div class="pbar-fill pbar-brand" style="width:78%"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:700;margin-bottom:4px"><span style="color:var(--muted)">또래 평균</span><span style="color:var(--muted)">72점</span></div>
+          <div class="pbar-track" style="height:8px"><div class="pbar-fill pbar-slate" style="width:72%"></div></div>
+        </div>
+        <div class="peer-rank" style="background:#eef2ff;border:1px solid rgba(92,110,248,.15)">
+          <span>🏅</span><span style="font-size:11px;font-weight:800;color:#5c6ef8">또래 상위 22%</span>
+        </div>
+      </div>
+
+      <!-- card 2 -->
+      <div class="peer-card">
+        <div class="peer-icon" style="background:#f0fdfa">🎤</div>
+        <div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:10px">발음 정확도 (음소 평균)</div>
+        <div style="display:flex;align-items:flex-end;gap:10px;margin-bottom:14px">
+          <div class="peer-num">84<span style="font-size:1rem;color:var(--sub);font-weight:700">점</span></div>
+          <div style="background:#ecfdf5;border:1px solid rgba(16,185,129,.2);color:#059669;border-radius:10px;padding:4px 10px;font-size:12px;font-weight:900;margin-bottom:5px">+8점 ↑</div>
+        </div>
+        <div style="margin-bottom:6px">
+          <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:700;margin-bottom:4px"><span>서준이</span><span style="color:#2dd4bf">84점</span></div>
+          <div class="pbar-track" style="height:10px"><div class="pbar-fill pbar-teal" style="width:84%"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:700;margin-bottom:4px"><span style="color:var(--muted)">또래 평균</span><span style="color:var(--muted)">76점</span></div>
+          <div class="pbar-track" style="height:8px"><div class="pbar-fill pbar-slate" style="width:76%"></div></div>
+        </div>
+        <div class="peer-rank" style="background:#f0fdfa;border:1px solid rgba(45,212,191,.15)">
+          <span>🥇</span><span style="font-size:11px;font-weight:800;color:#2dd4bf">또래 상위 15%</span>
+        </div>
+      </div>
+
+      <!-- card 3 -->
+      <div class="peer-card">
+        <div class="peer-icon" style="background:#fff0f6">💨</div>
+        <div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:10px">유창성 (WPM)</div>
+        <div style="display:flex;align-items:flex-end;gap:10px;margin-bottom:14px">
+          <div class="peer-num">95<span style="font-size:1rem;color:var(--sub);font-weight:700">점</span></div>
+          <div style="background:#ecfdf5;border:1px solid rgba(16,185,129,.2);color:#059669;border-radius:10px;padding:4px 10px;font-size:12px;font-weight:900;margin-bottom:5px">+13점 ↑</div>
+        </div>
+        <div style="margin-bottom:6px">
+          <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:700;margin-bottom:4px"><span>서준이</span><span style="color:#ff6b9d">95점</span></div>
+          <div class="pbar-track" style="height:10px"><div class="pbar-fill pbar-amber" style="width:95%"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:700;margin-bottom:4px"><span style="color:var(--muted)">또래 평균</span><span style="color:var(--muted)">82점</span></div>
+          <div class="pbar-track" style="height:8px"><div class="pbar-fill pbar-slate" style="width:82%"></div></div>
+        </div>
+        <div class="peer-rank" style="background:#fff0f6;border:1px solid rgba(255,107,157,.15)">
+          <span>🏆</span><span style="font-size:11px;font-weight:800;color:#ff6b9d">또래 상위 8%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="trophy">
+      <div class="trophy-emoji">🏆</div>
+      <div style="flex:1;min-width:200px">
+        <div style="font-size:1.05rem;font-weight:900;color:#fff;margin-bottom:7px">전체 종합 순위 · 또래 상위 15%</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.72);line-height:1.6">
+          세 가지 핵심 지표 모두에서 또래 평균을 상회하고 있어요.<br>이 속도라면 다음 달에는 상위 10%도 가능합니다! 💪
+        </div>
+      </div>
+      <div class="trophy-stat">
+        <div style="font-size:2rem;font-weight:900;color:#ffe066">+9점</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.65);font-weight:700">또래 평균 대비</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">© 2026 프리미엄 초등 영어 분석 시스템 · AI 기반 개인화 리포트</div>
+</div>
+
+<script>
+/* ── Tab switching ── */
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+  // re-render charts if needed
+  if (id === 'vocab')  { renderVocabCharts(); }
+  if (id === 'pron')   { renderPronCharts(); }
+  if (id === 'habit')  { renderHabitChart(); }
 }
 
-/* ─── Progress Bar ─── */
-const ProgressBar = ({ value, variant='brand', delay=0 }) => {
-    const cls = variant==='success' ? 'progress-fill-success' : variant==='warn' ? 'progress-fill-warn' : '';
-    return (
-        <div className="progress-track">
-            <div
-                className={`progress-fill ${cls}`}
-                style={{ width:`${value}%`, animationDelay:`${delay}ms`, animationDuration:'.9s' }}
-            />
-        </div>
-    );
-};
+/* ── Count-up ── */
+function countUp(el, target, duration) {
+  const start = Date.now();
+  const unit = el.querySelector('span') ? el.querySelector('span').outerHTML : '';
+  const tick = () => {
+    const p = Math.min((Date.now() - start) / duration, 1);
+    const v = Math.round((1 - Math.pow(1-p, 3)) * target);
+    el.innerHTML = v + unit;
+    if (p < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+window.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('[data-target]').forEach(el => {
+    const t = parseInt(el.dataset.target);
+    setTimeout(() => countUp(el, t, 1300), 300);
+  });
+});
 
-/* ─── KPI Card ─── */
-const KPICard = ({ label, value, rawValue, unit='', trend, icon, color, glow, delay=0 }) => {
-    const cnt = useCountUp(rawValue ?? 0, 1200, delay + 200);
-    return (
-        <div className="kpi-card anim-fade-up" style={{animationDelay:`${delay}ms`,opacity:0}}>
-            <div className="kpi-glow" style={{background:glow}}></div>
-            <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:'16px'}}>
-                <div style={{
-                    width:'44px',height:'44px',borderRadius:'14px',
-                    background:`linear-gradient(135deg,${color}22,${color}11)`,
-                    display:'flex',alignItems:'center',justifyContent:'center'
-                }}>
-                    <i data-lucide={icon} style={{width:'20px',height:'20px',color:color}}></i>
-                </div>
-                <span className="badge badge-success" style={{fontSize:'10px'}}>{trend}</span>
-            </div>
-            <div style={{color:'var(--text-muted)',fontSize:'12px',fontWeight:700,marginBottom:'4px'}}>{label}</div>
-            <div className="stat-num" style={{color:'var(--text-primary)'}}>
-                {rawValue !== undefined ? cnt : value}
-                {unit && <span style={{fontSize:'1rem',fontWeight:700,color:'var(--text-secondary)',marginLeft:'4px'}}>{unit}</span>}
-            </div>
-        </div>
-    );
-};
+/* ── Chart defaults ── */
+Chart.defaults.font.family = "'Pretendard Variable', Pretendard, sans-serif";
+Chart.defaults.font.weight = '600';
+Chart.defaults.color = '#94a3b8';
 
-/* ─── Main Dashboard ─── */
-function Dashboard() {
-    const [activeTab, setActiveTab] = useState('overview');
-    const [prevTab, setPrevTab] = useState(null);
+const MONTHS = ['11월','12월','1월','2월','3월','4월'];
+const BRAND = '#5c6ef8', TEAL='#2dd4bf', ROSE='#ff6b9d', AMBER='#ffb347', VIOLET='#a78bfa';
 
-    useEffect(() => { lucide.createIcons(); }, [activeTab]);
-
-    const changeTab = (id) => {
-        setPrevTab(activeTab);
-        setActiveTab(id);
-    };
-
-    const tabs = [
-        { id:'overview', label:'📊 개요',      emoji:'📊' },
-        { id:'vocab',    label:'📖 어휘 상세',  emoji:'📖' },
-        { id:'pron',     label:'🎤 발음 상세',  emoji:'🎤' },
-        { id:'habit',    label:'⏰ 학습 습관',  emoji:'⏰' },
-        { id:'bench',    label:'🏆 또래 비교',  emoji:'🏆' },
-    ];
-
-    return (
-        <div style={{maxWidth:'1140px',margin:'0 auto',padding:'24px 16px 64px',display:'flex',flexDirection:'column',gap:'24px'}}>
-
-            {/* ── HERO ── */}
-            <div className="hero-gradient anim-scale-in" style={{
-                borderRadius:'32px',
-                padding:'40px 40px 36px',
-                position:'relative',
-                overflow:'hidden',
-                opacity:0,animationFillMode:'forwards'
-            }}>
-                {/* decorative orbs */}
-                <div className="orb" style={{width:'180px',height:'180px',background:'rgba(255,255,255,.12)',top:'-60px',right:'10%',animation:'float 6s ease-in-out infinite'}}></div>
-                <div className="orb" style={{width:'120px',height:'120px',background:'rgba(167,139,250,.2)',bottom:'-30px',right:'5%',animation:'float 8s ease-in-out infinite 1s'}}></div>
-                <div className="orb" style={{width:'60px',height:'60px',background:'rgba(255,107,157,.25)',top:'20px',left:'40%',animation:'float 5s ease-in-out infinite .5s'}}></div>
-
-                <div style={{display:'flex',flexWrap:'wrap',justifyContent:'space-between',alignItems:'flex-start',gap:'20px',position:'relative',zIndex:1}}>
-                    <div>
-                        <div style={{display:'flex',gap:'8px',marginBottom:'14px',flexWrap:'wrap'}}>
-                            <span className="badge" style={{background:'rgba(255,255,255,.22)',color:'white',border:'1px solid rgba(255,255,255,.3)',backdropFilter:'blur(8px)'}}>
-                                ✨ 프리미엄 AI 리포트
-                            </span>
-                            <span className="badge" style={{background:'rgba(255,255,255,.15)',color:'rgba(255,255,255,.85)',border:'1px solid rgba(255,255,255,.2)'}}>
-                                26년 4월 기준
-                            </span>
-                        </div>
-
-                        <h1 style={{fontSize:'clamp(1.5rem,4vw,2.2rem)',fontWeight:900,color:'white',lineHeight:1.25,letterSpacing:'-.02em',marginBottom:'10px'}}>
-                            서준이의 영어 자신감이<br/>
-                            <span style={{color:'#ffe066',animation:'sparkle 2s ease-in-out infinite'}}>쑥쑥 자라고 있어요! 🌱</span>
-                        </h1>
-
-                        <p style={{color:'rgba(255,255,255,.7)',fontSize:'14px',fontWeight:600}}>
-                            초등 4학년 · 강남 센터 · 최근 6개월 분석
-                        </p>
-                    </div>
-
-                    <div style={{display:'flex',gap:'10px',flexWrap:'wrap',alignItems:'flex-start'}}>
-                        {/* Streak badge */}
-                        <div style={{
-                            background:'rgba(255,255,255,.15)',
-                            backdropFilter:'blur(12px)',
-                            border:'1px solid rgba(255,255,255,.25)',
-                            borderRadius:'20px',
-                            padding:'14px 20px',
-                            display:'flex',flexDirection:'column',alignItems:'center'
-                        }}>
-                            <span style={{fontSize:'2rem',lineHeight:1}}>🔥</span>
-                            <span style={{fontSize:'1.4rem',fontWeight:900,color:'white',lineHeight:1.2}}>32일</span>
-                            <span style={{fontSize:'11px',color:'rgba(255,255,255,.65)',fontWeight:700}}>연속 학습</span>
-                        </div>
-
-                        <button style={{
-                            display:'flex',alignItems:'center',gap:'8px',
-                            background:'rgba(255,255,255,.2)',
-                            backdropFilter:'blur(12px)',
-                            border:'1px solid rgba(255,255,255,.35)',
-                            borderRadius:'16px',
-                            color:'white',
-                            padding:'12px 20px',
-                            fontSize:'13px',fontWeight:800,
-                            cursor:'pointer',
-                            transition:'background .2s',
-                            fontFamily:'inherit'
-                        }}
-                        onMouseEnter={e=>e.currentTarget.style.background='rgba(255,255,255,.3)'}
-                        onMouseLeave={e=>e.currentTarget.style.background='rgba(255,255,255,.2)'}
-                        >
-                            <i data-lucide="download" style={{width:'16px',height:'16px'}}></i>
-                            PDF 저장
-                        </button>
-                    </div>
-                </div>
-
-                {/* Praise strip */}
-                <div style={{
-                    marginTop:'24px',
-                    background:'rgba(255,255,255,.14)',
-                    backdropFilter:'blur(12px)',
-                    border:'1px solid rgba(255,255,255,.22)',
-                    borderRadius:'18px',
-                    padding:'16px 22px',
-                    display:'flex',alignItems:'center',gap:'14px',
-                    position:'relative',zIndex:1
-                }}>
-                    <div style={{
-                        background:'linear-gradient(135deg,#ffe066,#ffb347)',
-                        borderRadius:'12px',
-                        width:'40px',height:'40px',
-                        display:'flex',alignItems:'center',justifyContent:'center',
-                        flexShrink:0,fontSize:'20px'
-                    }}>💬</div>
-                    <div>
-                        <div style={{fontSize:'13px',color:'rgba(255,255,255,.65)',fontWeight:700,marginBottom:'3px'}}>이달의 선생님 칭찬</div>
-                        <div style={{fontSize:'15px',fontWeight:800,color:'white',lineHeight:1.4}}>
-                            "서준아, 지난달보다 어려운 단어도 훨씬 잘 맞히더라! 정말 멋져!"
-                        </div>
-                    </div>
-                    <div style={{marginLeft:'auto',flexShrink:0}}>
-                        <div style={{
-                            background:'linear-gradient(135deg,#10b981,#2dd4bf)',
-                            borderRadius:'12px',
-                            padding:'6px 12px',
-                            color:'white',
-                            fontSize:'11px',fontWeight:900,
-                            whiteSpace:'nowrap'
-                        }}>
-                            어휘 +12% ↑
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* ── KPI GRID ── */}
-            <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(210px,1fr))',gap:'16px'}}>
-                <KPICard label="종합 발음 정확도"  rawValue={84}  unit="점"   trend="+5점"    icon="mic"      color="#5c6ef8" glow="#5c6ef8" delay={0}   />
-                <KPICard label="유창성 (WPM)"      rawValue={95}  unit="WPM"  trend="상위 15%" icon="wind"     color="#2dd4bf" glow="#2dd4bf" delay={80}  />
-                <KPICard label="연속 학습 기록"    rawValue={32}  unit="일"   trend="꾸준함 왕" icon="flame"    color="#ff6b9d" glow="#ff6b9d" delay={160} />
-                <KPICard label="집중 최고 시간대"  value="오후 8시" trend="정답률 최고" icon="clock" color="#a78bfa" glow="#a78bfa" delay={240} />
-            </div>
-
-            {/* ── TAB BAR ── */}
-            <div className="tab-bar">
-                {tabs.map(t => (
-                    <button
-                        key={t.id}
-                        className={`tab-btn ${activeTab===t.id?'active':''}`}
-                        onClick={() => changeTab(t.id)}
-                    >{t.label}</button>
-                ))}
-            </div>
-
-            {/* ── TAB CONTENT ── */}
-            <div key={activeTab} className="anim-tab" style={{minHeight:'440px',opacity:0,animationFillMode:'forwards'}}>
-
-                {/* ════ 1. 개요 ════ */}
-                {activeTab==='overview' && (
-                    <div style={{display:'flex',flexDirection:'column',gap:'20px'}}>
-                        <div style={{display:'grid',gridTemplateColumns:'1fr',gap:'20px'}}
-                             className="overview-grid">
-                            <style>{`@media(min-width:900px){.overview-grid{grid-template-columns:2fr 1fr;}}`}</style>
-
-                            {/* Vocab trend */}
-                            <div className="card" style={{padding:'28px'}}>
-                                <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:'20px'}}>
-                                    <div>
-                                        <div className="section-title">어휘력 성장 추이</div>
-                                        <div className="section-sub">최근 6개월 꾸준히 우상향 📈</div>
-                                    </div>
-                                    <span className="badge badge-brand">6개월 분석</span>
-                                </div>
-                                <div style={{height:'260px'}}>
-                                    <ResponsiveContainer width="100%" height="100%">
-                                        <AreaChart data={vocabData} margin={{top:10,right:8,left:-24,bottom:0}}>
-                                            <defs>
-                                                <linearGradient id="gScore" x1="0" y1="0" x2="0" y2="1">
-                                                    <stop offset="5%"  stopColor="#5c6ef8" stopOpacity={0.35}/>
-                                                    <stop offset="95%" stopColor="#5c6ef8" stopOpacity={0}/>
-                                                </linearGradient>
-                                            </defs>
-                                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9"/>
-                                            <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{fill:'#94a3b8',fontSize:12,fontWeight:600}} dy={8}/>
-                                            <YAxis axisLine={false} tickLine={false} tick={{fill:'#94a3b8',fontSize:12}}/>
-                                            <Tooltip content={<CustomTooltip/>}/>
-                                            <Area type="monotone" dataKey="score" name="종합 점수"
-                                                stroke="#5c6ef8" strokeWidth={3.5}
-                                                fillOpacity={1} fill="url(#gScore)"
-                                                dot={{r:5,fill:'#5c6ef8',stroke:'white',strokeWidth:2}}
-                                                activeDot={{r:7,fill:'#5c6ef8',stroke:'white',strokeWidth:2}}
-                                            />
-                                        </AreaChart>
-                                    </ResponsiveContainer>
-                                </div>
-                            </div>
-
-                            {/* Phoneme radar */}
-                            <div className="card" style={{padding:'28px'}}>
-                                <div className="section-title">발음 밸런스</div>
-                                <div className="section-sub" style={{marginBottom:'4px'}}>/l/ 발음이 원어민 수준이에요 ⭐</div>
-                                <div style={{height:'240px'}}>
-                                    <ResponsiveContainer width="100%" height="100%">
-                                        <RadarChart cx="50%" cy="50%" outerRadius="72%" data={phonemeData}>
-                                            <defs>
-                                                <linearGradient id="radarGrad" x1="0" y1="0" x2="1" y2="1">
-                                                    <stop offset="0%" stopColor="#5c6ef8"/>
-                                                    <stop offset="100%" stopColor="#a78bfa"/>
-                                                </linearGradient>
-                                            </defs>
-                                            <PolarGrid stroke="#e2e8f0"/>
-                                            <PolarAngleAxis dataKey="sound" tick={{fill:'#64748b',fontSize:13,fontWeight:700}}/>
-                                            <Radar name="정확도" dataKey="value"
-                                                stroke="url(#radarGrad)" strokeWidth={2.5}
-                                                fill="url(#radarGrad)" fillOpacity={0.25}
-                                                dot={{r:4,fill:'#5c6ef8',stroke:'white',strokeWidth:1.5}}
-                                            />
-                                            <Tooltip content={<CustomTooltip/>}/>
-                                        </RadarChart>
-                                    </ResponsiveContainer>
-                                </div>
-
-                                {/* quick stats */}
-                                <div style={{display:'flex',gap:'8px',marginTop:'8px'}}>
-                                    {phonemeData.slice(0,3).map(p=>(
-                                        <div key={p.sound} style={{
-                                            flex:1,background:'#f8fafc',borderRadius:'12px',
-                                            padding:'8px 6px',textAlign:'center'
-                                        }}>
-                                            <div style={{fontSize:'12px',fontWeight:800,color:'#5c6ef8'}}>{p.sound}</div>
-                                            <div style={{fontSize:'13px',fontWeight:900,color:'var(--text-primary)'}}>{p.value}</div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Guide box */}
-                        <div style={{
-                            background:'linear-gradient(135deg,#f0f4ff 0%,#faf5ff 100%)',
-                            border:'1px solid rgba(92,110,248,.12)',
-                            borderRadius:'24px',
-                            padding:'28px 32px',
-                            display:'flex',gap:'24px',alignItems:'center',flexWrap:'wrap'
-                        }}>
-                            <div style={{
-                                background:'white',
-                                borderRadius:'20px',
-                                width:'64px',height:'64px',
-                                display:'flex',alignItems:'center',justifyContent:'center',
-                                boxShadow:'0 4px 16px rgba(92,110,248,.15)',
-                                flexShrink:0,fontSize:'32px'
-                            }}>💡</div>
-                            <div style={{flex:1,minWidth:'240px'}}>
-                                <div style={{fontSize:'1rem',fontWeight:900,color:'var(--text-primary)',marginBottom:'8px'}}>
-                                    가정 연계 학습 가이드
-                                </div>
-                                <p style={{color:'var(--text-secondary)',fontSize:'14px',lineHeight:1.7}}>
-                                    서준이는 현재 <strong style={{color:'#5c6ef8'}}>형용사 어휘</strong>와{' '}
-                                    <strong style={{color:'#ff6b9d'}}>/th/ 발음</strong>을 집중적으로 다듬으면 유창성이 폭발적으로 늘어나는 시기입니다.
-                                    이번 주말에는 가족과 함께 주변 사물을 영어 형용사로 묘사하는 <strong>스피드 게임</strong>을 해보시는 건 어떨까요?
-                                </p>
-                            </div>
-                            <div style={{display:'flex',gap:'8px',flexWrap:'wrap'}}>
-                                <span className="badge badge-brand">형용사 집중</span>
-                                <span className="badge badge-rose">/th/ 교정</span>
-                            </div>
-                        </div>
-                    </div>
-                )}
-
-                {/* ════ 2. 어휘 상세 ════ */}
-                {activeTab==='vocab' && (
-                    <div style={{display:'grid',gap:'20px',gridTemplateColumns:'1fr'}}
-                         className="vocab-grid">
-                        <style>{`@media(min-width:760px){.vocab-grid{grid-template-columns:1fr 1fr;}}`}</style>
-
-                        <div className="card" style={{padding:'28px'}}>
-                            <div className="section-title">난이도 구간별 정답률</div>
-                            <div className="section-sub" style={{marginBottom:'20px'}}>어려운 단어 정답률이 점진적으로 오르고 있습니다 💪</div>
-                            <div style={{height:'280px'}}>
-                                <ResponsiveContainer width="100%" height="100%">
-                                    <LineChart data={vocabDifficultyData} margin={{top:10,right:8,left:-24,bottom:0}}>
-                                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9"/>
-                                        <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{fill:'#94a3b8',fontSize:12,fontWeight:600}}/>
-                                        <YAxis axisLine={false} tickLine={false} tick={{fill:'#94a3b8',fontSize:12}} domain={[40,100]}/>
-                                        <Tooltip content={<CustomTooltip/>}/>
-                                        <Legend iconType="circle" wrapperStyle={{fontSize:'12px',fontWeight:700,paddingTop:'12px'}}/>
-                                        <Line type="monotone" dataKey="easy" stroke="#2dd4bf" strokeWidth={2.5} name="쉬움" dot={{r:4,stroke:'white',strokeWidth:1.5,fill:'#2dd4bf'}}/>
-                                        <Line type="monotone" dataKey="mid"  stroke="#ffb347" strokeWidth={2.5} name="보통" dot={{r:4,stroke:'white',strokeWidth:1.5,fill:'#ffb347'}}/>
-                                        <Line type="monotone" dataKey="hard" stroke="#ff6b9d" strokeWidth={2.5} name="어려움" dot={{r:4,stroke:'white',strokeWidth:1.5,fill:'#ff6b9d'}}/>
-                                    </LineChart>
-                                </ResponsiveContainer>
-                            </div>
-                        </div>
-
-                        <div className="card" style={{padding:'28px'}}>
-                            <div className="section-title">품사별 정확도</div>
-                            <div className="section-sub" style={{marginBottom:'20px'}}>동사·일상표현 활용 능력이 뛰어납니다 ⭐</div>
-                            <div style={{height:'280px'}}>
-                                <ResponsiveContainer width="100%" height="100%">
-                                    <BarChart data={posAccuracy} margin={{top:10,right:8,left:-24,bottom:0}}>
-                                        <defs>
-                                            <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
-                                                <stop offset="0%" stopColor="#5c6ef8"/>
-                                                <stop offset="100%" stopColor="#a78bfa"/>
-                                            </linearGradient>
-                                        </defs>
-                                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9"/>
-                                        <XAxis dataKey="pos" axisLine={false} tickLine={false} tick={{fill:'#94a3b8',fontSize:12,fontWeight:600}}/>
-                                        <YAxis axisLine={false} tickLine={false} tick={{fill:'#94a3b8',fontSize:12}} domain={[40,100]}/>
-                                        <Tooltip content={<CustomTooltip/>} cursor={{fill:'rgba(92,110,248,.05)',radius:8}}/>
-                                        <Bar dataKey="acc" name="정확도" fill="url(#barGrad)" radius={[8,8,0,0]} barSize={36}/>
-                                    </BarChart>
-                                </ResponsiveContainer>
-                            </div>
-                        </div>
-
-                        {/* summary pills */}
-                        <div style={{
-                            gridColumn:'1/-1',
-                            display:'flex',gap:'12px',flexWrap:'wrap'
-                        }}>
-                            {[
-                                {label:'일상표현', value:'93점', color:'#2dd4bf', bg:'#f0fdfa'},
-                                {label:'동사',     value:'88점', color:'#5c6ef8', bg:'#f0f4ff'},
-                                {label:'명사',     value:'81점', color:'#a78bfa', bg:'#faf5ff'},
-                                {label:'형용사',   value:'72점', color:'#ffb347', bg:'#fffbeb', warn:true},
-                                {label:'전치사',   value:'68점', color:'#ff6b9d', bg:'#fff0f6', warn:true},
-                            ].map(item => (
-                                <div key={item.label} style={{
-                                    background:item.bg,
-                                    border:`1px solid ${item.color}22`,
-                                    borderRadius:'14px',
-                                    padding:'12px 18px',
-                                    display:'flex',flexDirection:'column',
-                                    alignItems:'center',gap:'2px',
-                                    minWidth:'90px'
-                                }}>
-                                    <div style={{fontSize:'11px',fontWeight:700,color:'#64748b'}}>{item.label}</div>
-                                    <div style={{fontSize:'1.1rem',fontWeight:900,color:item.color}}>{item.value}</div>
-                                    {item.warn && <div style={{fontSize:'10px',color:'#94a3b8'}}>집중 필요</div>}
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                )}
-
-                {/* ════ 3. 발음 상세 ════ */}
-                {activeTab==='pron' && (
-                    <div style={{display:'grid',gap:'20px',gridTemplateColumns:'1fr'}}
-                         className="pron-grid">
-                        <style>{`@media(min-width:760px){.pron-grid{grid-template-columns:1fr 1fr;}}`}</style>
-
-                        <div className="card" style={{padding:'28px'}}>
-                            <div className="section-title">주요 음소 정확도 추이</div>
-                            <div className="section-sub" style={{marginBottom:'20px'}}>/th/ 발음이 눈에 띄게 개선되고 있습니다 📈</div>
-                            <div style={{height:'280px'}}>
-                                <ResponsiveContainer width="100%" height="100%">
-                                    <LineChart data={phonemeTrend} margin={{top:10,right:8,left:-24,bottom:0}}>
-                                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9"/>
-                                        <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{fill:'#94a3b8',fontSize:12,fontWeight:600}}/>
-                                        <YAxis axisLine={false} tickLine={false} tick={{fill:'#94a3b8',fontSize:12}} domain={[40,100]}/>
-                                        <Tooltip content={<CustomTooltip/>}/>
-                                        <Legend iconType="circle" wrapperStyle={{fontSize:'12px',fontWeight:700,paddingTop:'12px'}}/>
-                                        <Line type="monotone" dataKey="r"  name="/r/ 발음" stroke="#5c6ef8" strokeWidth={2.5} dot={{r:4,stroke:'white',strokeWidth:1.5,fill:'#5c6ef8'}}/>
-                                        <Line type="monotone" dataKey="th" name="/th/ 발음" stroke="#a78bfa" strokeWidth={2.5} strokeDasharray="6 3" dot={{r:4,stroke:'white',strokeWidth:1.5,fill:'#a78bfa'}}/>
-                                        <Line type="monotone" dataKey="v"  name="/v/ 발음" stroke="#ff6b9d" strokeWidth={2.5} dot={{r:4,stroke:'white',strokeWidth:1.5,fill:'#ff6b9d'}}/>
-                                    </LineChart>
-                                </ResponsiveContainer>
-                            </div>
-                        </div>
-
-                        <div className="card" style={{padding:'28px'}}>
-                            <div className="section-title">발음 교정 추천 스프린트</div>
-                            <div style={{display:'flex',flexDirection:'column',gap:'16px',marginTop:'20px'}}>
-                                {[
-                                    {label:"/th/ 교정 집중 훈련",    desc:"문장 10개 묶음 2주",    progress:60, variant:'warn',    icon:"target",  color:"#ff6b9d"},
-                                    {label:"/r/ vs /l/ 대비 훈련",  desc:"최소대립쌍 8세트",       progress:85, variant:'success', icon:"mic-2",   color:"#2dd4bf"},
-                                    {label:"억양/리듬 쉐도잉",       desc:"원어민 억양 따라하기",   progress:45, variant:'warn',    icon:"music",   color:"#ffb347"},
-                                ].map((it,idx) => (
-                                    <div key={idx} className="sprint-item">
-                                        <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'10px'}}>
-                                            <div style={{display:'flex',alignItems:'center',gap:'10px'}}>
-                                                <div style={{
-                                                    width:'34px',height:'34px',borderRadius:'10px',
-                                                    background:`${it.color}18`,
-                                                    display:'flex',alignItems:'center',justifyContent:'center'
-                                                }}>
-                                                    <i data-lucide={it.icon} style={{width:'16px',height:'16px',color:it.color}}></i>
-                                                </div>
-                                                <div>
-                                                    <div style={{fontSize:'13px',fontWeight:800,color:'var(--text-primary)'}}>{it.label}</div>
-                                                    <div style={{fontSize:'11px',color:'var(--text-muted)'}}>{it.desc}</div>
-                                                </div>
-                                            </div>
-                                            <span style={{
-                                                fontSize:'12px',fontWeight:900,
-                                                color: it.variant==='success'?'#059669':'#d97706',
-                                                background: it.variant==='success'?'#ecfdf5':'#fffbeb',
-                                                padding:'3px 10px',borderRadius:'99px'
-                                            }}>{it.progress}%</span>
-                                        </div>
-                                        <ProgressBar value={it.progress} variant={it.variant} delay={idx*100}/>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                )}
-
-                {/* ════ 4. 학습 습관 ════ */}
-                {activeTab==='habit' && (
-                    <div style={{display:'flex',flexDirection:'column',gap:'20px'}}>
-                        <div className="card" style={{padding:'28px'}}>
-                            <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:'20px',flexWrap:'wrap',gap:'12px'}}>
-                                <div>
-                                    <div className="section-title">시간대별 학습 시도 및 정확도</div>
-                                    <div className="section-sub">저녁 시간대(오후 8시 전후)에 학습 효율이 가장 높아요 🌙</div>
-                                </div>
-                                <span className="badge badge-amber">⏰ 오후 8시 = 골든타임</span>
-                            </div>
-                            <div style={{height:'280px'}}>
-                                <ResponsiveContainer width="100%" height="100%">
-                                    <ComposedChart data={timeOfDay} margin={{top:10,right:32,left:-24,bottom:0}}>
-                                        <defs>
-                                            <linearGradient id="barGradHabit" x1="0" y1="0" x2="0" y2="1">
-                                                <stop offset="0%" stopColor="#e0e9ff"/>
-                                                <stop offset="100%" stopColor="#f1f5f9"/>
-                                            </linearGradient>
-                                        </defs>
-                                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9"/>
-                                        <XAxis dataKey="slot" axisLine={false} tickLine={false} tick={{fill:'#94a3b8',fontSize:12,fontWeight:600}}/>
-                                        <YAxis yAxisId="left"  axisLine={false} tickLine={false} tick={{fill:'#94a3b8',fontSize:12}}/>
-                                        <YAxis yAxisId="right" orientation="right" axisLine={false} tickLine={false} tick={{fill:'#94a3b8',fontSize:12}} domain={[40,100]}/>
-                                        <Tooltip content={<CustomTooltip/>}/>
-                                        <Legend iconType="circle" wrapperStyle={{fontSize:'12px',fontWeight:700,paddingTop:'12px'}}/>
-                                        <Bar yAxisId="left" dataKey="attempts" name="학습 시도 횟수" fill="url(#barGradHabit)" radius={[8,8,0,0]} barSize={60}/>
-                                        <Line yAxisId="right" type="monotone" dataKey="acc" name="정답률(%)" stroke="#5c6ef8" strokeWidth={4}
-                                            dot={{r:7,fill:'#5c6ef8',stroke:'white',strokeWidth:2.5}}
-                                            activeDot={{r:9,fill:'#5c6ef8',stroke:'white',strokeWidth:2.5}}
-                                        />
-                                    </ComposedChart>
-                                </ResponsiveContainer>
-                            </div>
-                        </div>
-
-                        {/* habit insights */}
-                        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(200px,1fr))',gap:'16px'}}>
-                            {[
-                                {emoji:'🌙',title:'최적 학습 시간',  body:'오후 7~9시 사이 학습 시 정답률이 평균 11%p 높아요.',  color:'#5c6ef8'},
-                                {emoji:'🔥',title:'연속 학습 효과',  body:'32일 연속 학습 기록! 꾸준함이 실력을 만들어요.',      color:'#ff6b9d'},
-                                {emoji:'📈',title:'주간 성장률',     body:'매주 평균 2.3점씩 점진적으로 성장 중입니다.',         color:'#2dd4bf'},
-                            ].map((item,i) => (
-                                <div key={i} style={{
-                                    background:'white',
-                                    border:`1px solid ${item.color}18`,
-                                    borderRadius:'20px',
-                                    padding:'20px',
-                                    borderTop:`3px solid ${item.color}`
-                                }}>
-                                    <div style={{fontSize:'24px',marginBottom:'8px'}}>{item.emoji}</div>
-                                    <div style={{fontSize:'13px',fontWeight:900,color:'var(--text-primary)',marginBottom:'6px'}}>{item.title}</div>
-                                    <div style={{fontSize:'12px',color:'var(--text-muted)',lineHeight:1.6}}>{item.body}</div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                )}
-
-                {/* ════ 5. 또래 비교 ════ */}
-                {activeTab==='bench' && (
-                    <div style={{display:'flex',flexDirection:'column',gap:'20px'}}>
-                        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))',gap:'20px'}}>
-                            {peerBenchmarks.map((b,i) => {
-                                const diff = b.self - b.peer;
-                                return (
-                                    <div key={i} className="peer-card">
-                                        {/* icon */}
-                                        <div style={{
-                                            width:'48px',height:'48px',borderRadius:'14px',
-                                            background:`${b.color}15`,
-                                            display:'flex',alignItems:'center',justifyContent:'center',
-                                            marginBottom:'14px'
-                                        }}>
-                                            <i data-lucide={b.icon} style={{width:'22px',height:'22px',color:b.color}}></i>
-                                        </div>
-
-                                        <div style={{fontSize:'12px',fontWeight:700,color:'var(--text-muted)',marginBottom:'10px'}}>{b.metric}</div>
-
-                                        <div style={{display:'flex',alignItems:'flex-end',gap:'10px',marginBottom:'16px'}}>
-                                            <div className="stat-num" style={{color:'var(--text-primary)'}}>{b.self}<span style={{fontSize:'1rem',color:'var(--text-muted)',fontWeight:700}}>점</span></div>
-                                            <div style={{
-                                                background:'linear-gradient(135deg,#ecfdf5,#d1fae5)',
-                                                border:'1px solid rgba(16,185,129,.2)',
-                                                color:'#059669',
-                                                borderRadius:'10px',
-                                                padding:'4px 10px',
-                                                fontSize:'12px',fontWeight:900,
-                                                marginBottom:'6px'
-                                            }}>+{diff}점 ↑</div>
-                                        </div>
-
-                                        {/* bars */}
-                                        <div style={{display:'flex',flexDirection:'column',gap:'10px'}}>
-                                            <div>
-                                                <div style={{display:'flex',justifyContent:'space-between',fontSize:'11px',fontWeight:700,marginBottom:'5px'}}>
-                                                    <span style={{color:'var(--text-primary)'}}>서준이</span>
-                                                    <span style={{color:b.color,fontWeight:900}}>{b.self}점</span>
-                                                </div>
-                                                <div className="progress-track" style={{height:'10px'}}>
-                                                    <div style={{
-                                                        height:'100%',borderRadius:'99px',
-                                                        background:`linear-gradient(90deg,${b.color},${b.color}aa)`,
-                                                        width:`${b.self}%`,
-                                                        animation:'progressFill 1s ease both'
-                                                    }}/>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div style={{display:'flex',justifyContent:'space-between',fontSize:'11px',fontWeight:700,marginBottom:'5px'}}>
-                                                    <span style={{color:'var(--text-muted)'}}>또래 평균</span>
-                                                    <span style={{color:'var(--text-muted)'}}>{b.peer}점</span>
-                                                </div>
-                                                <div className="progress-track" style={{height:'8px'}}>
-                                                    <div style={{
-                                                        height:'100%',borderRadius:'99px',
-                                                        background:'#cbd5e1',
-                                                        width:`${b.peer}%`,
-                                                        animation:'progressFill 1s ease .15s both'
-                                                    }}/>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* rank badge */}
-                                        <div style={{
-                                            marginTop:'16px',
-                                            background:`${b.color}0e`,
-                                            border:`1px solid ${b.color}22`,
-                                            borderRadius:'12px',
-                                            padding:'8px 12px',
-                                            display:'flex',alignItems:'center',gap:'6px'
-                                        }}>
-                                            <span style={{fontSize:'14px'}}>🏅</span>
-                                            <span style={{fontSize:'11px',fontWeight:800,color:b.color}}>또래 상위 {i===0?22:i===1?15:8}%</span>
-                                        </div>
-                                    </div>
-                                );
-                            })}
-                        </div>
-
-                        {/* overall trophy */}
-                        <div style={{
-                            background:'linear-gradient(135deg,#4355e8,#7b5cfa,#a78bfa)',
-                            borderRadius:'24px',
-                            padding:'28px 32px',
-                            display:'flex',alignItems:'center',gap:'20px',flexWrap:'wrap',
-                            boxShadow:'0 8px 32px rgba(67,85,232,.28)'
-                        }}>
-                            <div style={{fontSize:'52px',lineHeight:1,animation:'float 3s ease-in-out infinite'}}>🏆</div>
-                            <div style={{flex:1,minWidth:'200px'}}>
-                                <div style={{fontSize:'1.1rem',fontWeight:900,color:'white',marginBottom:'6px'}}>
-                                    전체 종합 순위 · 또래 상위 15%
-                                </div>
-                                <div style={{fontSize:'13px',color:'rgba(255,255,255,.75)',lineHeight:1.6}}>
-                                    세 가지 핵심 지표 모두에서 또래 평균을 상회하고 있어요.<br/>
-                                    이 속도라면 다음 달에는 상위 10%도 가능합니다! 💪
-                                </div>
-                            </div>
-                            <div style={{
-                                background:'rgba(255,255,255,.18)',
-                                backdropFilter:'blur(8px)',
-                                border:'1px solid rgba(255,255,255,.3)',
-                                borderRadius:'16px',
-                                padding:'16px 24px',
-                                textAlign:'center'
-                            }}>
-                                <div style={{fontSize:'2rem',fontWeight:900,color:'#ffe066'}}>+9점</div>
-                                <div style={{fontSize:'12px',color:'rgba(255,255,255,.7)',fontWeight:700}}>또래 평균 대비</div>
-                            </div>
-                        </div>
-                    </div>
-                )}
-            </div>
-
-            {/* ── FOOTER ── */}
-            <div style={{textAlign:'center',paddingTop:'8px'}}>
-                <p style={{fontSize:'12px',color:'var(--text-muted)',fontWeight:600}}>
-                    © 2026 프리미엄 초등 영어 분석 시스템 · AI 기반 개인화 리포트
-                </p>
-            </div>
-        </div>
-    );
+function darkTooltip() {
+  return {
+    backgroundColor: 'rgba(15,23,42,0.92)',
+    titleColor: '#94a3b8',
+    bodyColor: '#ffffff',
+    borderColor: 'rgba(255,255,255,.08)',
+    borderWidth: 1,
+    padding: 12,
+    cornerRadius: 12,
+    titleFont: { size: 11, weight: '600' },
+    bodyFont: { size: 12, weight: '700' },
+    boxPadding: 4,
+  };
+}
+function noGrid(horizontal=true) {
+  return {
+    x: { display: true, grid: { display: false }, border: { display: false }, ticks: { font: { size: 11 } } },
+    y: { display: true, grid: { color: '#f1f5f9', drawBorder: false }, border: { display: false }, ticks: { font: { size: 11 } } },
+  };
 }
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<Dashboard/>);
+const charts = {};
+
+/* ── Overview: Vocab area ── */
+(function() {
+  const ctx = document.getElementById('chartVocab').getContext('2d');
+  const grad = ctx.createLinearGradient(0, 0, 0, 240);
+  grad.addColorStop(0, 'rgba(92,110,248,.32)');
+  grad.addColorStop(1, 'rgba(92,110,248,0)');
+  charts.vocab = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: MONTHS,
+      datasets: [{
+        label: '종합 점수',
+        data: [70, 75, 79, 83, 88, 93],
+        borderColor: BRAND,
+        borderWidth: 3.5,
+        backgroundColor: grad,
+        fill: true,
+        tension: 0.4,
+        pointBackgroundColor: BRAND,
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2.5,
+        pointRadius: 5,
+        pointHoverRadius: 7,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: darkTooltip() },
+      scales: {
+        x: { grid: { display: false }, border: { display: false }, ticks: { font: { size: 11 } } },
+        y: { grid: { color: '#f1f5f9' }, border: { display: false }, ticks: { font: { size: 11 } }, min: 60, max: 100 }
+      }
+    }
+  });
+})();
+
+/* ── Overview: Radar ── */
+(function() {
+  const ctx = document.getElementById('chartRadar').getContext('2d');
+  charts.radar = new Chart(ctx, {
+    type: 'radar',
+    data: {
+      labels: ['/r/','/th/','/v/','/l/','/æ/'],
+      datasets: [{
+        label: '정확도',
+        data: [85, 76, 88, 92, 82],
+        borderColor: BRAND,
+        borderWidth: 2.5,
+        backgroundColor: 'rgba(92,110,248,.18)',
+        pointBackgroundColor: BRAND,
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+        pointRadius: 4,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: darkTooltip() },
+      scales: {
+        r: {
+          grid: { color: '#e2e8f0' },
+          angleLines: { color: '#e2e8f0' },
+          ticks: { display: false },
+          pointLabels: { font: { size: 12, weight: '700' }, color: '#475569' },
+          min: 50, max: 100
+        }
+      }
+    }
+  });
+})();
+
+/* ── Vocab tab charts ── */
+let vocabTabDone = false;
+function renderVocabCharts() {
+  if (vocabTabDone) return; vocabTabDone = true;
+  // Line: difficulty
+  (function() {
+    const ctx = document.getElementById('chartVocabDiff').getContext('2d');
+    charts.vocabDiff = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: MONTHS,
+        datasets: [
+          { label:'쉬움', data:[88,91,90,92,91,93], borderColor:TEAL, borderWidth:2.5, backgroundColor:'transparent', tension:0.4, pointBackgroundColor:TEAL, pointBorderColor:'#fff', pointBorderWidth:2, pointRadius:4 },
+          { label:'보통', data:[75,76,77,78,80,82], borderColor:AMBER, borderWidth:2.5, backgroundColor:'transparent', tension:0.4, pointBackgroundColor:AMBER, pointBorderColor:'#fff', pointBorderWidth:2, pointRadius:4 },
+          { label:'어려움', data:[55,57,60,63,67,71], borderColor:ROSE, borderWidth:2.5, backgroundColor:'transparent', tension:0.4, pointBackgroundColor:ROSE, pointBorderColor:'#fff', pointBorderWidth:2, pointRadius:4 },
+        ]
+      },
+      options: {
+        responsive:true, maintainAspectRatio:false,
+        plugins: { legend:{ labels:{ boxWidth:10, usePointStyle:true, font:{size:11,weight:'700'} } }, tooltip: darkTooltip() },
+        scales: {
+          x: { grid:{display:false}, border:{display:false}, ticks:{font:{size:11}} },
+          y: { grid:{color:'#f1f5f9'}, border:{display:false}, ticks:{font:{size:11}}, min:40, max:100 }
+        }
+      }
+    });
+  })();
+  // Bar: pos accuracy
+  (function() {
+    const ctx = document.getElementById('chartPos').getContext('2d');
+    const grad = ctx.createLinearGradient(0,0,0,260);
+    grad.addColorStop(0,'#5c6ef8'); grad.addColorStop(1,'#a78bfa');
+    charts.pos = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['동사','형용사','명사','일상표현','전치사'],
+        datasets: [{ label:'정확도', data:[88,72,81,93,68], backgroundColor:grad, borderRadius:8, borderSkipped:false }]
+      },
+      options: {
+        responsive:true, maintainAspectRatio:false,
+        plugins: { legend:{display:false}, tooltip: darkTooltip() },
+        scales: {
+          x: { grid:{display:false}, border:{display:false}, ticks:{font:{size:11}} },
+          y: { grid:{color:'#f1f5f9'}, border:{display:false}, ticks:{font:{size:11}}, min:40, max:100 }
+        }
+      }
+    });
+  })();
+}
+
+/* ── Pron tab ── */
+let pronTabDone = false;
+function renderPronCharts() {
+  if (pronTabDone) return; pronTabDone = true;
+  const ctx = document.getElementById('chartPhonemeTrend').getContext('2d');
+  charts.phoneme = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: MONTHS,
+      datasets: [
+        { label:'/r/ 발음', data:[68,70,71,73,75,78], borderColor:BRAND, borderWidth:2.5, backgroundColor:'transparent', tension:0.4, pointBackgroundColor:BRAND, pointBorderColor:'#fff', pointBorderWidth:2, pointRadius:4 },
+        { label:'/th/ 발음', data:[55,58,63,67,72,77], borderColor:VIOLET, borderWidth:2.5, backgroundColor:'transparent', tension:0.4, borderDash:[6,3], pointBackgroundColor:VIOLET, pointBorderColor:'#fff', pointBorderWidth:2, pointRadius:4 },
+        { label:'/v/ 발음', data:[74,75,78,80,82,85], borderColor:ROSE, borderWidth:2.5, backgroundColor:'transparent', tension:0.4, pointBackgroundColor:ROSE, pointBorderColor:'#fff', pointBorderWidth:2, pointRadius:4 },
+      ]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins: { legend:{ labels:{ boxWidth:10, usePointStyle:true, font:{size:11,weight:'700'} } }, tooltip: darkTooltip() },
+      scales: {
+        x: { grid:{display:false}, border:{display:false}, ticks:{font:{size:11}} },
+        y: { grid:{color:'#f1f5f9'}, border:{display:false}, ticks:{font:{size:11}}, min:40, max:100 }
+      }
+    }
+  });
+}
+
+/* ── Habit tab ── */
+let habitTabDone = false;
+function renderHabitChart() {
+  if (habitTabDone) return; habitTabDone = true;
+  const ctx = document.getElementById('chartHabit').getContext('2d');
+  charts.habit = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['오전','오후','저녁'],
+      datasets: [
+        {
+          label:'학습 시도 횟수', data:[120,260,410],
+          backgroundColor:'#e0e9ff', borderRadius:8, borderSkipped:false,
+          yAxisID:'y', order:2
+        },
+        {
+          label:'정답률(%)', data:[74,77,85],
+          borderColor:BRAND, borderWidth:4, backgroundColor:'transparent',
+          type:'line', tension:0.4,
+          pointBackgroundColor:BRAND, pointBorderColor:'#fff', pointBorderWidth:2.5, pointRadius:7,
+          yAxisID:'y1', order:1
+        }
+      ]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins: { legend:{ labels:{ boxWidth:10, usePointStyle:true, font:{size:11,weight:'700'} } }, tooltip: darkTooltip() },
+      scales: {
+        x: { grid:{display:false}, border:{display:false}, ticks:{font:{size:11}} },
+        y: { grid:{color:'#f1f5f9'}, border:{display:false}, ticks:{font:{size:11}}, title:{display:false} },
+        y1: { position:'right', grid:{display:false}, border:{display:false}, ticks:{font:{size:11}}, min:40, max:100 }
+      }
+    }
+  });
+}
 </script>
 </body>
 </html>
