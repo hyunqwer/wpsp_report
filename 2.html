@@ -19,16 +19,17 @@
         }
     </script>
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+    
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://unpkg.com/recharts/umd/Recharts.js"></script>
+    <script src="https://unpkg.com/prop-types@15.7.2/prop-types.min.js"></script> <script src="https://unpkg.com/recharts/umd/Recharts.js"></script>
+
     <style>
         body { background-color: #f8fafc; font-family: 'Pretendard Variable', Pretendard, sans-serif; -webkit-font-smoothing: antialiased; }
         .recharts-tooltip-cursor { fill: rgba(99, 102, 241, 0.05); }
         .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
-        /* 커스텀 스크롤바 */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
@@ -41,10 +42,10 @@
         const { useState, useEffect } = React;
         const { 
             AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
-            RadarChart, PolarGrid, PolarAngleAxis, Radar, LineChart, Line 
+            RadarChart, PolarGrid, PolarAngleAxis, Radar
         } = Recharts;
 
-        // UI Components
+        // 공통 UI 컴포넌트
         const Card = ({ children, className = "" }) => (
             <div className={`bg-white rounded-3xl shadow-[0_2px_20px_rgb(0,0,0,0.04)] border border-slate-100/50 overflow-hidden ${className}`}>{children}</div>
         );
@@ -53,26 +54,28 @@
             return <span className={`px-3 py-1 rounded-full text-xs font-bold border ${styles}`}>{children}</span>;
         };
 
-        // Mock Data
+        // 데이터 세팅
         const months = ["3월", "4월", "5월", "6월", "7월", "8월"];
         const vocabData = months.map((m, i) => ({ month: m, score: Math.round(70 + i * 4.5) }));
         const phonemeData = [
             { sound: "/r/", value: 85 }, { sound: "/th/", value: 76 }, { sound: "/v/", value: 88 }, { sound: "/l/", value: 92 }, { sound: "/æ/", value: 82 }
         ];
-        const fluencyData = months.map((m, i) => ({ month: m, wpm: 75 + i * 4 }));
 
         function Dashboard() {
-            useEffect(() => { lucide.createIcons(); });
+            // React DOM 충돌을 막기 위해 의존성 배열([])을 추가하여 최초 1회만 아이콘 렌더링 실행
+            useEffect(() => {
+                lucide.createIcons();
+            }, []);
 
             return (
                 <div className="max-w-6xl mx-auto p-4 md:p-8 space-y-8">
                     
-                    {/* Header Section */}
+                    {/* 상단 헤더 영역 */}
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
                         <div>
                             <div className="flex gap-2 mb-3">
                                 <Badge variant="brand">프리미엄 AI 리포트</Badge>
-                                <Badge variant="neutral">25년 8월 기준</Badge>
+                                <Badge variant="neutral">26년 4월 기준</Badge>
                             </div>
                             <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
                                 서준이의 영어 자신감이<br/>
@@ -85,7 +88,7 @@
                         </button>
                     </div>
 
-                    {/* Proactive Idea: Parent Praise Guide (가장 먼저 보여주는 칭찬 요약) */}
+                    {/* 핵심 요약 & 칭찬 포인트 */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="bg-gradient-to-br from-brand-500 to-brand-600 rounded-3xl p-8 text-white shadow-lg relative overflow-hidden">
                             <div className="absolute -right-10 -top-10 opacity-10"><i data-lucide="award" className="w-64 h-64"></i></div>
@@ -123,10 +126,8 @@
                         </div>
                     </div>
 
-                    {/* Chart Section */}
+                    {/* 차트 영역 */}
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        
-                        {/* Area Chart: 성장 추이 */}
                         <Card className="lg:col-span-2 p-6">
                             <div className="flex justify-between items-center mb-6">
                                 <div>
@@ -156,7 +157,6 @@
                             </div>
                         </Card>
 
-                        {/* Radar Chart: 발음 밸런스 */}
                         <Card className="p-6">
                             <h3 className="text-lg font-bold text-slate-800 mb-1">발음 밸런스</h3>
                             <p className="text-sm text-slate-500 mb-4">/l/ 발음이 원어민 수준이에요</p>
@@ -172,7 +172,7 @@
                         </Card>
                     </div>
 
-                    {/* Proactive Idea: Actionable Home Guide */}
+                    {/* 다음 단계 가이드 */}
                     <Card className="p-1">
                         <div className="bg-slate-50 rounded-[22px] p-6 md:p-8 flex flex-col md:flex-row gap-8 items-center">
                             <div className="flex-shrink-0 bg-white p-4 rounded-3xl shadow-sm">
